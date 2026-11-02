@@ -15,6 +15,8 @@ public class Main {
     public static final Instant START_TIME = Instant.now();
     public static final List<String> CLASS_LABELS = Arrays.asList(
             "AdmordorsumFloridensis",
+            "AdmordorsumGrongingensis",
+            "ConcavicepsScobifolium",
             "NeotesseraVitripalpus",
             "PalpatophoraUtiliformis",
             "PorrectofrontusMechadeus");

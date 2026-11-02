@@ -1,5 +1,6 @@
 package com.mtheory7.model;
 
+import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.PadToSquare;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
@@ -20,14 +21,12 @@ import org.deeplearning4j.earlystopping.scorecalc.DataSetLossCalculator;
 import org.deeplearning4j.earlystopping.termination.MaxEpochsTerminationCondition;
 import org.deeplearning4j.earlystopping.termination.ScoreImprovementEpochTerminationCondition;
 import org.deeplearning4j.earlystopping.trainer.EarlyStoppingGraphTrainer;
-import org.deeplearning4j.nn.api.Model;
 import org.deeplearning4j.nn.conf.layers.GlobalPoolingLayer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.conf.layers.PoolingType;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.nn.transferlearning.FineTuneConfiguration;
 import org.deeplearning4j.nn.transferlearning.TransferLearning;
-import org.deeplearning4j.optimize.api.BaseTrainingListener;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.deeplearning4j.ui.api.UIServer;
 import org.deeplearning4j.ui.model.stats.StatsListener;
@@ -48,24 +47,21 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
-import static com.mtheory7.Main.*;
+import static com.mtheory7.Main.CLASS_LABELS;
+import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
+    public static final int MAX_EPOCHS = 500;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
-
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
-    private static final int NUM_OF_CLASSES = CLASS_LABELS.size();
     private static final int BATCH_SIZE = 16;
     private static final long SEED = 12345L;
-    private static final int MAX_EPOCHS = 500;
-    private int CURRENT_EPOCH = 1;
 
     public void trainModelAndSave(String modelPath, String dataPath) throws IOException {
         log.info("Configuring aggressive native memory garbage collection...");
@@ -93,10 +89,10 @@ public class OcclupanidModelTrainer {
         PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
                 new Pair<>(new PadToSquare(), 1.0),
                 new Pair<>(new FlipImageTransform(1), 0.5),
-                new Pair<>(new RotateImageTransform(45), 0.5),
+                new Pair<>(new RotateImageTransform(15), 0.3),
                 new Pair<>(new CropImageTransform(10), 0.3)
         ), true);
-        PipelineImageTransform valTransform = new PipelineImageTransform(Arrays.asList(
+        PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
                 new Pair<>(new PadToSquare(), 1.0)
         ), true);
         InputSplit[] splits = fileSplit.sample(pathFilter, 70, 16, 14);
@@ -110,9 +106,9 @@ public class OcclupanidModelTrainer {
         valRR.initialize(valSplit, valTransform);
         testRR.initialize(testSplit, valTransform);
         log.info("Detected training labels: {}", trainRR.getLabels());
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, NUM_OF_CLASSES);
-        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, NUM_OF_CLASSES);
-        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, NUM_OF_CLASSES);
+        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, CLASS_LABELS.size());
 
         DataNormalization scaler = new VGG16ImagePreProcessor();
         trainIter.setPreProcessor(scaler);
@@ -143,7 +139,7 @@ public class OcclupanidModelTrainer {
                 .addLayer("predictions",
                         new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
                                 .nIn(512)
-                                .nOut(NUM_OF_CLASSES)
+                                .nOut(CLASS_LABELS.size())
                                 .weightInit(org.deeplearning4j.nn.weights.WeightInit.XAVIER)
                                 .activation(Activation.SOFTMAX)
                                 .build(),
@@ -161,7 +157,7 @@ public class OcclupanidModelTrainer {
         EarlyStoppingConfiguration<ComputationGraph> esConf = new EarlyStoppingConfiguration.Builder<ComputationGraph>()
                 .epochTerminationConditions(
                         new MaxEpochsTerminationCondition(MAX_EPOCHS),
-                        new ScoreImprovementEpochTerminationCondition(15)
+                        new ScoreImprovementEpochTerminationCondition(20)
                 )
                 .scoreCalculator(new DataSetLossCalculator(valIter, true))
                 .evaluateEveryNEpochs(1)
@@ -188,16 +184,5 @@ public class OcclupanidModelTrainer {
         File modelSaveFile = new File(modelSavePath);
         bestModel.save(modelSaveFile, true);
         log.info("Model successfully exported to: {}", modelSaveFile.getAbsolutePath());
-    }
-
-    public class ProgressEpochListener extends BaseTrainingListener {
-        @Override
-        public void onEpochEnd(Model model) {
-            float percentage = (((float) CURRENT_EPOCH / MAX_EPOCHS) * 100);
-            float totalHours = ((float) (Duration.between(START_TIME, Instant.now()).toMillis()) / 1000 / (CURRENT_EPOCH) * MAX_EPOCHS) / 3600;
-            float elapsedHours = (float) (Duration.between(START_TIME, Instant.now()).toMillis()) / 1000 / 3600;
-            log.info("Percent complete: {}% - Estimated hours remaining to max epoch: {}", percentage, (totalHours - elapsedHours));
-            CURRENT_EPOCH++;
-        }
     }
 }

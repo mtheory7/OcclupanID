@@ -15,7 +15,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -29,7 +28,7 @@ public class OcclupanidModelTester {
         ComputationGraph model = ComputationGraph.load(new File(modelPath), false);
 
         log.info("Configuring image preprocessor...");
-        PipelineImageTransform inferenceTransform = new PipelineImageTransform(Arrays.asList(
+        PipelineImageTransform inferenceTransform = new PipelineImageTransform(List.of(
                 new Pair<>(new PadToSquare(), 1.0)
         ), true);
         NativeImageLoader loader = new NativeImageLoader(224, 224, 3, inferenceTransform);
@@ -37,8 +36,10 @@ public class OcclupanidModelTester {
 
         int errorCount = 0;
         int totalCount = 0;
+        int logThreshold = 80;
 
         log.info("Scanning directory: {}", imagesPath);
+        log.info("Logging any images that are incorrect or less than {}% confident...", logThreshold);
         try (Stream<Path> paths = Files.walk(Paths.get(imagesPath))) {
             List<Path> imagePaths = paths
                     .filter(Files::isRegularFile)
@@ -56,8 +57,7 @@ public class OcclupanidModelTester {
                 int predictedIndex = predictions.argMax(1).getInt(0);
                 String predictedLabel = CLASS_LABELS.get(predictedIndex);
                 double confidence = predictions.getDouble(predictedIndex) * 100.0;
-                int logThreshold = 80;
-                log.info("Logging any images that are incorrect or less than {}% confident...", logThreshold);
+
                 if (!actualLabel.equals(predictedLabel)) {
                     errorCount++;
                     log.info("Incorrect: File '{}' | Actual: '{}' | Predicted: '{}' (Confidence: {}%)",
