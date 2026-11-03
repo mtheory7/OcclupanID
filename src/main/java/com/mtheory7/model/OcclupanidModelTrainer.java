@@ -55,7 +55,7 @@ import static com.mtheory7.Main.CLASS_LABELS;
 import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
-    public static final int MAX_EPOCHS = 500;
+    public static final int MAX_EPOCHS = 100;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
@@ -95,7 +95,7 @@ public class OcclupanidModelTrainer {
         PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
                 new Pair<>(new PadToSquare(), 1.0)
         ), true);
-        InputSplit[] splits = fileSplit.sample(pathFilter, 70, 16, 14);
+        InputSplit[] splits = fileSplit.sample(pathFilter, 60, 20, 20);
         InputSplit trainSplit = splits[0];
         InputSplit valSplit = splits[1];
         InputSplit testSplit = splits[2];
@@ -122,7 +122,7 @@ public class OcclupanidModelTrainer {
 
         log.info("Configuring Transfer Learning...");
         FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder()
-                .updater(new Adam(1e-4))
+                .updater(new Adam(5e-4))
                 .weightDecay(1e-3)
                 .seed(SEED)
                 .build();
@@ -130,7 +130,7 @@ public class OcclupanidModelTrainer {
         log.info("Building ComputationGraph...");
         ComputationGraph model = new TransferLearning.GraphBuilder(pretrainedNet)
                 .fineTuneConfiguration(fineTuneConf)
-                .setFeatureExtractor("fire9_concat")
+                .setFeatureExtractor("fire7_concat")
                 .removeVertexAndConnections("conv10")
                 .removeVertexAndConnections("relu10")
                 .removeVertexAndConnections("global_average_pooling2d_5")
