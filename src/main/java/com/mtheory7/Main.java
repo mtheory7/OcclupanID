@@ -5,6 +5,7 @@ import com.mtheory7.model.OcclupanidModelTrainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ public class Main {
 
         log.info("Starting model tests...");
         OcclupanidModelTester occlupanidModelTester = new OcclupanidModelTester();
-        occlupanidModelTester.predictImages((MODEL_PATH + "/" + MODEL_NAME), DATA_PATH);
+        occlupanidModelTester.predictImages((MODEL_PATH + File.separator + MODEL_NAME), DATA_PATH);
         log.info("Finished testing model");
 
         log.info("Program finished in {} hours", ((float) (Duration.between(START_TIME, Instant.now()).toMillis()) / 1000 / 3600));

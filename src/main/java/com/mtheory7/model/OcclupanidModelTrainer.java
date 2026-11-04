@@ -69,10 +69,10 @@ public class OcclupanidModelTrainer {
         Nd4j.getMemoryManager().togglePeriodicGc(true);
         Nd4j.getMemoryManager().setAutoGcWindow(5000);
 
-        String modelCheckpointPath = modelPath + "/checkpoints";
+        String modelCheckpointPath = modelPath + File.separator + "checkpoints";
         if (!new File(modelCheckpointPath).exists()) //noinspection ResultOfMethodCallIgnored
             new File(modelCheckpointPath).mkdirs();
-        String modelSavePath = modelPath + "/" + MODEL_NAME;
+        String modelSavePath = modelPath + File.separator + MODEL_NAME;
 
         UIServer uiServer = UIServer.getInstance();
         File statsFile = new File(modelPath, "training_stats.dl4j");
