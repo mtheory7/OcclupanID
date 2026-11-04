@@ -1,11 +1,11 @@
 package com.mtheory7.model;
 
+import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.PadToSquare;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
 import org.datavec.api.split.InputSplit;
-import org.datavec.image.loader.BaseImageLoader;
 import org.datavec.image.loader.NativeImageLoader;
 import org.datavec.image.recordreader.ImageRecordReader;
 import org.datavec.image.transform.CropImageTransform;
@@ -48,20 +48,21 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+import static com.mtheory7.Main.CLASS_LABELS;
 import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
+    public static final int MAX_EPOCHS = 50;
+    private static final int EPOCH_TERMINATION_AMOUNT = 20;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
-
-    private static final int height = 224;
-    private static final int width = 224;
-    private static final int channels = 3;
-    private static final int numOfClasses = 2;
-    private static final int batchSize = 16;
-    private static final long seed = 12345L;
-    private static final int epochs = 500;
+    private static final int HEIGHT = 224;
+    private static final int WIDTH = 224;
+    private static final int CHANNELS = 3;
+    private static final int BATCH_SIZE = 16;
+    private static final long SEED = 12345L;
 
     public void trainModelAndSave(String modelPath, String dataPath) throws IOException {
         log.info("Configuring aggressive native memory garbage collection...");
@@ -82,34 +83,33 @@ public class OcclupanidModelTrainer {
         FileSplit fileSplit = new FileSplit(trainingDataDirectory, NativeImageLoader.ALLOWED_FORMATS, new Random(123));
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
         BalancedPathFilter pathFilter = new BalancedPathFilter(
-                new Random(123),
+                new Random(SEED),
                 NativeImageLoader.ALLOWED_FORMATS,
                 labelMaker
         );
         PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
                 new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new FlipImageTransform(1), 0.5), // Horizontal flip
-                new Pair<>(new RotateImageTransform(15), 0.5), // Slight rotation
+                new Pair<>(new FlipImageTransform(1), 0.5),
+                new Pair<>(new RotateImageTransform(15), 0.3),
                 new Pair<>(new CropImageTransform(10), 0.3)
         ), true);
-        PipelineImageTransform valTransform = new PipelineImageTransform(Arrays.asList(
+        PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
                 new Pair<>(new PadToSquare(), 1.0)
         ), true);
-        // Split the 300 (150x2) images into 3 groups
-        InputSplit[] splits = fileSplit.sample(pathFilter, 70, 16, 14);
+        InputSplit[] splits = fileSplit.sample(pathFilter, 60, 20, 20);
         InputSplit trainSplit = splits[0];
         InputSplit valSplit = splits[1];
         InputSplit testSplit = splits[2];
-        ImageRecordReader trainRR = new ImageRecordReader(height, width, channels, labelMaker);
-        ImageRecordReader valRR = new ImageRecordReader(height, width, channels, labelMaker);
-        ImageRecordReader testRR = new ImageRecordReader(height, width, channels, labelMaker);
+        ImageRecordReader trainRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
+        ImageRecordReader valRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
+        ImageRecordReader testRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
         trainRR.initialize(trainSplit, trainTransform);
         valRR.initialize(valSplit, valTransform);
         testRR.initialize(testSplit, valTransform);
         log.info("Detected training labels: {}", trainRR.getLabels());
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, batchSize, 1, numOfClasses);
-        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, batchSize, 1, numOfClasses);
-        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, batchSize, 1, numOfClasses);
+        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, CLASS_LABELS.size());
 
         DataNormalization scaler = new VGG16ImagePreProcessor();
         trainIter.setPreProcessor(scaler);
@@ -123,15 +123,15 @@ public class OcclupanidModelTrainer {
 
         log.info("Configuring Transfer Learning...");
         FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder()
-                .updater(new Adam(1e-4))
-                .weightDecay(1e-3) // L2 regularization
-                .seed(seed)
+                .updater(new Adam(5e-4))
+                .weightDecay(1e-3)
+                .seed(SEED)
                 .build();
 
         log.info("Building ComputationGraph...");
         ComputationGraph model = new TransferLearning.GraphBuilder(pretrainedNet)
                 .fineTuneConfiguration(fineTuneConf)
-                .setFeatureExtractor("fire9_concat")
+                .setFeatureExtractor("fire7_concat")
                 .removeVertexAndConnections("conv10")
                 .removeVertexAndConnections("relu10")
                 .removeVertexAndConnections("global_average_pooling2d_5")
@@ -140,7 +140,7 @@ public class OcclupanidModelTrainer {
                 .addLayer("predictions",
                         new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
                                 .nIn(512)
-                                .nOut(numOfClasses)
+                                .nOut(CLASS_LABELS.size())
                                 .weightInit(org.deeplearning4j.nn.weights.WeightInit.XAVIER)
                                 .activation(Activation.SOFTMAX)
                                 .build(),
@@ -149,15 +149,16 @@ public class OcclupanidModelTrainer {
                 .build();
 
         model.setListeners(
-                new ScoreIterationListener(10),
-                new StatsListener(statsStorage)
+                new ScoreIterationListener(50),
+                new StatsListener(statsStorage),
+                new ProgressEpochListener()
         );
 
         log.info("Configuring Early Stopping...");
         EarlyStoppingConfiguration<ComputationGraph> esConf = new EarlyStoppingConfiguration.Builder<ComputationGraph>()
                 .epochTerminationConditions(
-                        new MaxEpochsTerminationCondition(epochs),
-                        new ScoreImprovementEpochTerminationCondition(15)
+                        new MaxEpochsTerminationCondition(MAX_EPOCHS),
+                        new ScoreImprovementEpochTerminationCondition(EPOCH_TERMINATION_AMOUNT)
                 )
                 .scoreCalculator(new DataSetLossCalculator(valIter, true))
                 .evaluateEveryNEpochs(1)
