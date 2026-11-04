@@ -55,7 +55,8 @@ import static com.mtheory7.Main.CLASS_LABELS;
 import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
-    public static final int MAX_EPOCHS = 100;
+    public static final int MAX_EPOCHS = 50;
+    private static final int EPOCH_TERMINATION_AMOUNT = 20;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
@@ -157,7 +158,7 @@ public class OcclupanidModelTrainer {
         EarlyStoppingConfiguration<ComputationGraph> esConf = new EarlyStoppingConfiguration.Builder<ComputationGraph>()
                 .epochTerminationConditions(
                         new MaxEpochsTerminationCondition(MAX_EPOCHS),
-                        new ScoreImprovementEpochTerminationCondition(20)
+                        new ScoreImprovementEpochTerminationCondition(EPOCH_TERMINATION_AMOUNT)
                 )
                 .scoreCalculator(new DataSetLossCalculator(valIter, true))
                 .evaluateEveryNEpochs(1)
