@@ -1,10 +1,8 @@
 package com.mtheory7.model;
 
-import com.google.gson.Gson;
 import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.Greyscale3ChannelTransform;
 import com.mtheory7.utils.PadToSquare;
-import com.mtheory7.utils.SaveImageTransform;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
@@ -104,12 +102,12 @@ public class OcclupanidModelTrainer {
                 new Pair<>(new CropImageTransform(5), 0.3)
                 //new Pair<>(new SaveImageTransform("C:/Users/thesp/Code/deeplearning4j-occlupanid/trainingData/data/transformed", "final_pipeline_out", 100), 1.0)
         ), false);
-        log.info("trainTransform object:{}", new Gson().toJson(trainTransform));
+        log.info("trainTransform object:{}", trainTransform);
         PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
                 new Pair<>(new PadToSquare(), 1.0),
                 new Pair<>(new CropImageTransform(50), 1.0)
         ), false);
-        log.info("valTransform object:{}", new Gson().toJson(valTransform));
+        log.info("valTransform object:{}", valTransform);
         InputSplit[] splits = fileSplit.sample(pathFilter, 60, 20, 20);
         InputSplit trainSplit = splits[0];
         InputSplit valSplit = splits[1];
