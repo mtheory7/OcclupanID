@@ -1,6 +1,7 @@
 package com.mtheory7.model;
 
 import com.mtheory7.listener.ProgressEpochListener;
+import com.mtheory7.utils.Greyscale3ChannelTransform;
 import com.mtheory7.utils.PadToSquare;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
@@ -56,8 +57,10 @@ import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
     public static final int MAX_EPOCHS = 50;
-    private static final int EPOCH_TERMINATION_AMOUNT = 20;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
+    private static final int EPOCH_TERMINATION_AMOUNT = 20;
+    private static final double LEARNING_RATE = 1e-4;
+    private static final double WEIGHT_DECAY = 1e-3;
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
@@ -65,14 +68,17 @@ public class OcclupanidModelTrainer {
     private static final long SEED = 12345L;
 
     public void trainModelAndSave(String modelPath, String dataPath) throws IOException {
+        log.info("MAX_EPOCHS:{} EPOCH_TERMINATION_AMOUNT:{} LEARNING_RATE:{} WEIGHT_DECAY:{} HEIGHT:{} WIDTH:{} CHANNELS:{} BATCH_SIZE:{} SEED:{}",
+                MAX_EPOCHS, EPOCH_TERMINATION_AMOUNT, LEARNING_RATE, WEIGHT_DECAY, HEIGHT, WIDTH, CHANNELS, BATCH_SIZE, SEED);
+
         log.info("Configuring aggressive native memory garbage collection...");
         Nd4j.getMemoryManager().togglePeriodicGc(true);
         Nd4j.getMemoryManager().setAutoGcWindow(5000);
 
-        String modelCheckpointPath = modelPath + "/checkpoints";
+        String modelCheckpointPath = modelPath + File.separator + "checkpoints";
         if (!new File(modelCheckpointPath).exists()) //noinspection ResultOfMethodCallIgnored
             new File(modelCheckpointPath).mkdirs();
-        String modelSavePath = modelPath + "/" + MODEL_NAME;
+        String modelSavePath = modelPath + File.separator + MODEL_NAME;
 
         UIServer uiServer = UIServer.getInstance();
         File statsFile = new File(modelPath, "training_stats.dl4j");
@@ -80,7 +86,7 @@ public class OcclupanidModelTrainer {
         uiServer.attach(statsStorage);
 
         File trainingDataDirectory = new File(dataPath);
-        FileSplit fileSplit = new FileSplit(trainingDataDirectory, NativeImageLoader.ALLOWED_FORMATS, new Random(123));
+        FileSplit fileSplit = new FileSplit(trainingDataDirectory, NativeImageLoader.ALLOWED_FORMATS, new Random(SEED));
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
         BalancedPathFilter pathFilter = new BalancedPathFilter(
                 new Random(SEED),
@@ -89,17 +95,24 @@ public class OcclupanidModelTrainer {
         );
         PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
                 new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new FlipImageTransform(1), 0.5),
-                new Pair<>(new RotateImageTransform(15), 0.3),
-                new Pair<>(new CropImageTransform(10), 0.3)
-        ), true);
+                new Pair<>(new Greyscale3ChannelTransform(), 0.3),
+                new Pair<>(new FlipImageTransform(1), 0.3),
+                new Pair<>(new RotateImageTransform(90), 0.3),
+                new Pair<>(new CropImageTransform(50), 1.0),
+                new Pair<>(new CropImageTransform(5), 0.3)
+                //new Pair<>(new SaveImageTransform("C:/Users/thesp/Code/deeplearning4j-occlupanid/trainingData/data/transformed", "final_pipeline_out", 100), 1.0)
+        ), false);
+        log.info("trainTransform object:{}", trainTransform);
         PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
-                new Pair<>(new PadToSquare(), 1.0)
-        ), true);
+                new Pair<>(new PadToSquare(), 1.0),
+                new Pair<>(new CropImageTransform(50), 1.0)
+        ), false);
+        log.info("valTransform object:{}", valTransform);
         InputSplit[] splits = fileSplit.sample(pathFilter, 60, 20, 20);
         InputSplit trainSplit = splits[0];
         InputSplit valSplit = splits[1];
         InputSplit testSplit = splits[2];
+        log.info("trainSplit.length():{} valSplit.length():{} testSplit.length():{}", trainSplit.length(), valSplit.length(), testSplit.length());
         ImageRecordReader trainRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
         ImageRecordReader valRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
         ImageRecordReader testRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
@@ -121,10 +134,10 @@ public class OcclupanidModelTrainer {
         ComputationGraph pretrainedNet = zooModel.initPretrained(PretrainedType.IMAGENET);
         log.info(pretrainedNet.summary());
 
-        log.info("Configuring Transfer Learning...");
+        log.info("Configuring transfer learning...");
         FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder()
-                .updater(new Adam(5e-4))
-                .weightDecay(1e-3)
+                .updater(new Adam(LEARNING_RATE))
+                .weightDecay(WEIGHT_DECAY)
                 .seed(SEED)
                 .build();
 
@@ -167,7 +180,7 @@ public class OcclupanidModelTrainer {
 
         EarlyStoppingGraphTrainer trainer = new EarlyStoppingGraphTrainer(esConf, model, trainIter);
 
-        log.info("Starting network training with Early Stopping...");
+        log.info("Starting network training with EarlyStopping...");
         EarlyStoppingResult<ComputationGraph> result = trainer.fit();
 
         log.info("Training complete.");

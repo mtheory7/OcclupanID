@@ -2,6 +2,7 @@ package com.mtheory7.model;
 
 import com.mtheory7.utils.PadToSquare;
 import org.datavec.image.loader.NativeImageLoader;
+import org.datavec.image.transform.CropImageTransform;
 import org.datavec.image.transform.PipelineImageTransform;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.nd4j.common.primitives.Pair;
@@ -29,8 +30,9 @@ public class OcclupanidModelTester {
 
         log.info("Configuring image preprocessor...");
         PipelineImageTransform inferenceTransform = new PipelineImageTransform(List.of(
-                new Pair<>(new PadToSquare(), 1.0)
-        ), true);
+                new Pair<>(new PadToSquare(), 1.0),
+                new Pair<>(new CropImageTransform(50), 1.0)
+        ), false);
         NativeImageLoader loader = new NativeImageLoader(224, 224, 3, inferenceTransform);
         DataNormalization scaler = new VGG16ImagePreProcessor();
 
