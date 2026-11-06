@@ -60,7 +60,7 @@ public class OcclupanidModelTrainer {
     public static final int MAX_EPOCHS = 100;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
     private static final int EPOCH_TERMINATION_AMOUNT = 20;
-    private static final double LEARNING_RATE = 1e-4;
+    private static final double LEARNING_RATE = 5e-5;
     private static final double WEIGHT_DECAY = 1e-3;
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;

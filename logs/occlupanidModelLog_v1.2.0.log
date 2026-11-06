@@ -1,34 +1,34 @@
-17:29:06.354 [main] INFO  com.mtheory7.Main - Starting trainModelAndSave function...
-17:29:06.379 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - MAX_EPOCHS:100 EPOCH_TERMINATION_AMOUNT:20 LEARNING_RATE:1.0E-4 WEIGHT_DECAY:0.001 HEIGHT:224 WIDTH:224 CHANNELS:3 BATCH_SIZE:16 SEED:12345
-17:29:06.380 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Configuring aggressive native memory garbage collection...
-17:29:06.475 [main] INFO  org.nd4j.linalg.factory.Nd4jBackend - Loaded [CpuBackend] backend
-17:29:11.114 [main] INFO  org.nd4j.nativeblas.NativeOpsHolder - Number of threads used for linear algebra: 2
-17:29:11.122 [main] INFO  org.nd4j.linalg.cpu.nativecpu.CpuNDArrayFactory - Binary level Generic x86 optimization level AVX/AVX2
-17:29:11.162 [main] INFO  org.nd4j.nativeblas.Nd4jBlas - Number of threads used for OpenMP BLAS: 2
-17:29:11.200 [main] INFO  org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner - Backend used: [CPU]; OS: [Windows 11]
-17:29:11.200 [main] INFO  org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner - Cores: [4]; Memory: [4.0GB];
-17:29:11.201 [main] INFO  org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner - Blas vendor: [OPENBLAS]
-17:29:11.212 [main] INFO  org.nd4j.linalg.cpu.nativecpu.CpuBackend - Backend build information:
+22:30:52.510 [main] INFO  com.mtheory7.Main - Starting trainModelAndSave function...
+22:30:52.563 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - MAX_EPOCHS:100 EPOCH_TERMINATION_AMOUNT:20 LEARNING_RATE:5.0E-5 WEIGHT_DECAY:0.001 HEIGHT:224 WIDTH:224 CHANNELS:3 BATCH_SIZE:16 SEED:12345
+22:30:52.563 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Configuring aggressive native memory garbage collection...
+22:30:52.644 [main] INFO  org.nd4j.linalg.factory.Nd4jBackend - Loaded [CpuBackend] backend
+22:30:54.944 [main] INFO  org.nd4j.nativeblas.NativeOpsHolder - Number of threads used for linear algebra: 2
+22:30:54.953 [main] INFO  org.nd4j.linalg.cpu.nativecpu.CpuNDArrayFactory - Binary level Generic x86 optimization level AVX/AVX2
+22:30:54.996 [main] INFO  org.nd4j.nativeblas.Nd4jBlas - Number of threads used for OpenMP BLAS: 2
+22:30:55.033 [main] INFO  org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner - Backend used: [CPU]; OS: [Windows 11]
+22:30:55.033 [main] INFO  org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner - Cores: [4]; Memory: [4.0GB];
+22:30:55.033 [main] INFO  org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner - Blas vendor: [OPENBLAS]
+22:30:55.044 [main] INFO  org.nd4j.linalg.cpu.nativecpu.CpuBackend - Backend build information:
  GCC: "12.1.0"
 STD version: 201103L
 DEFAULT_ENGINE: samediff::ENGINE_CPU
 HAVE_FLATBUFFERS
 HAVE_OPENBLAS
-17:29:12.192 [vert.x-eventloop-thread-0] INFO  org.deeplearning4j.ui.VertxUIServer - Deeplearning4j UI server started at: http://localhost:9000
-17:29:13.347 [main] INFO  org.deeplearning4j.ui.VertxUIServer - StatsStorage instance attached to UI: FileStatsStorage(C:\Users\thesp\Code\deeplearning4j-occlupanid\models\training_stats.dl4j)
-17:29:14.707 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - trainTransform object:PipelineImageTransform(imageTransforms=[Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=1.0}, Pair{key=CropImageTransform(cropTop=50, cropLeft=50, cropBottom=50, cropRight=50, x=0, y=0), value=1.0}, Pair{key=CropImageTransform(cropTop=5, cropLeft=5, cropBottom=5, cropRight=5, x=0, y=0), value=0.4}, Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=0.4}, Pair{key=FlipImageTransform(flipMode=1, h=0, w=0, mode=0), value=0.4}, Pair{key=RotateImageTransform(centerx=0.0, centery=0.0, angle=90.0, scale=0.0, interMode=1, borderMode=0, borderValue=(0.0, 0.0, 0.0, 0.0), M=null), value=0.4}], shuffle=false, rng=org.nd4j.linalg.cpu.nativecpu.rng.CpuNativeRandom@2e51d054, currentTransforms=[])
-17:29:14.707 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - valTransform object:PipelineImageTransform(imageTransforms=[Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=1.0}, Pair{key=CropImageTransform(cropTop=50, cropLeft=50, cropBottom=50, cropRight=50, x=0, y=0), value=1.0}], shuffle=false, rng=org.nd4j.linalg.cpu.nativecpu.rng.CpuNativeRandom@2e51d054, currentTransforms=[])
-17:29:14.742 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - trainSplit.length():540 valSplit.length():180 testSplit.length():180
-17:29:14.764 [main] INFO  org.datavec.image.recordreader.BaseImageRecordReader - ImageRecordReader: 6 label classes inferred using label generator ParentPathLabelGenerator
-17:29:14.776 [main] INFO  org.datavec.image.recordreader.BaseImageRecordReader - ImageRecordReader: 6 label classes inferred using label generator ParentPathLabelGenerator
-17:29:14.778 [main] INFO  org.datavec.image.recordreader.BaseImageRecordReader - ImageRecordReader: 6 label classes inferred using label generator ParentPathLabelGenerator
-17:29:14.779 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Detected training labels: [AdmordorsumFloridensis, AdmordorsumGrongingensis, ConcavicepsScobifolium, NeotesseraVitripalpus, PalpatophoraUtiliformis, PorrectofrontusMechadeus]
-17:29:15.100 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Loading pre-trained SqueezeNet weights from ImageNet...
-17:29:15.128 [main] INFO  org.deeplearning4j.zoo.ZooModel - Using cached model at C:\Users\thesp\.deeplearning4j\models\squeezenet\squeezenet_dl4j_inference.v2.zip
-17:29:15.128 [main] INFO  org.deeplearning4j.zoo.ZooModel - Verifying download...
-17:29:15.193 [main] INFO  org.deeplearning4j.zoo.ZooModel - Checksum local is 3711411239, expecting 3711411239
-17:29:16.422 [main] INFO  org.deeplearning4j.nn.graph.ComputationGraph - Starting ComputationGraph with WorkspaceModes set to [training: ENABLED; inference: ENABLED], cacheMode set to [NONE]
-17:29:16.524 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - 
+22:30:56.329 [vert.x-eventloop-thread-0] INFO  org.deeplearning4j.ui.VertxUIServer - Deeplearning4j UI server started at: http://localhost:9000
+22:30:57.512 [main] INFO  org.deeplearning4j.ui.VertxUIServer - StatsStorage instance attached to UI: FileStatsStorage(C:\Users\thesp\Code\deeplearning4j-occlupanid\models\training_stats.dl4j)
+22:30:58.895 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - trainTransform object:PipelineImageTransform(imageTransforms=[Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=1.0}, Pair{key=CropImageTransform(cropTop=50, cropLeft=50, cropBottom=50, cropRight=50, x=0, y=0), value=1.0}, Pair{key=CropImageTransform(cropTop=5, cropLeft=5, cropBottom=5, cropRight=5, x=0, y=0), value=0.4}, Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=0.4}, Pair{key=FlipImageTransform(flipMode=1, h=0, w=0, mode=0), value=0.4}, Pair{key=RotateImageTransform(centerx=0.0, centery=0.0, angle=90.0, scale=0.0, interMode=1, borderMode=0, borderValue=(0.0, 0.0, 0.0, 0.0), M=null), value=0.4}], shuffle=false, rng=org.nd4j.linalg.cpu.nativecpu.rng.CpuNativeRandom@49206065, currentTransforms=[])
+22:30:58.896 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - valTransform object:PipelineImageTransform(imageTransforms=[Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=1.0}, Pair{key=CropImageTransform(cropTop=50, cropLeft=50, cropBottom=50, cropRight=50, x=0, y=0), value=1.0}], shuffle=false, rng=org.nd4j.linalg.cpu.nativecpu.rng.CpuNativeRandom@49206065, currentTransforms=[])
+22:30:58.965 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - trainSplit.length():540 valSplit.length():180 testSplit.length():180
+22:30:58.988 [main] INFO  org.datavec.image.recordreader.BaseImageRecordReader - ImageRecordReader: 6 label classes inferred using label generator ParentPathLabelGenerator
+22:30:58.992 [main] INFO  org.datavec.image.recordreader.BaseImageRecordReader - ImageRecordReader: 6 label classes inferred using label generator ParentPathLabelGenerator
+22:30:58.995 [main] INFO  org.datavec.image.recordreader.BaseImageRecordReader - ImageRecordReader: 6 label classes inferred using label generator ParentPathLabelGenerator
+22:30:58.996 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Detected training labels: [AdmordorsumFloridensis, AdmordorsumGrongingensis, ConcavicepsScobifolium, NeotesseraVitripalpus, PalpatophoraUtiliformis, PorrectofrontusMechadeus]
+22:30:59.340 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Loading pre-trained SqueezeNet weights from ImageNet...
+22:30:59.378 [main] INFO  org.deeplearning4j.zoo.ZooModel - Using cached model at C:\Users\thesp\.deeplearning4j\models\squeezenet\squeezenet_dl4j_inference.v2.zip
+22:30:59.379 [main] INFO  org.deeplearning4j.zoo.ZooModel - Verifying download...
+22:30:59.432 [main] INFO  org.deeplearning4j.zoo.ZooModel - Checksum local is 3711411239, expecting 3711411239
+22:31:00.652 [main] INFO  org.deeplearning4j.nn.graph.ComputationGraph - Starting ComputationGraph with WorkspaceModes set to [training: ENABLED; inference: ENABLED], cacheMode set to [NONE]
+22:31:00.737 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - 
 ====================================================================================================================================================
 VertexName (VertexType)                           nIn,nOut   TotalParams   ParamsShape                  Vertex Inputs                               
 ====================================================================================================================================================
@@ -105,264 +105,396 @@ loss (ActivationLayer)                            -,-        0             -    
            Frozen Parameters:  0
 ====================================================================================================================================================
 
-17:29:16.528 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Configuring transfer learning...
-17:29:16.540 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Building ComputationGraph...
-17:29:16.789 [main] INFO  org.deeplearning4j.nn.layers.FrozenLayer - Gradients for the frozen layer are not set and will therefore will not be updated.Warning will be issued only once per instance
-17:29:16.834 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Configuring Early Stopping...
-17:29:17.383 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Starting network training with EarlyStopping...
-17:29:17.383 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Starting early stopping training
-17:29:18.171 [main] INFO  org.deeplearning4j.nn.layers.FrozenLayer - Frozen layer instance found! Frozen layers are treated as always in test mode. Warning will only be issued once per instance
-17:29:29.413 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 0 is 5.848510426331874
-17:31:27.086 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 1.0% complete - Hours remaining to max epoch (est): 3.8703775 - Average epoch duration: 2.3456833 minutes
-17:31:27.088 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 0
-17:32:16.349 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 0: 2.0984366716375877
-17:33:10.205 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 50 is 1.6149313353064447
-17:34:08.738 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 2.0% complete - Hours remaining to max epoch (est): 4.115905 - Average epoch duration: 2.5199416 minutes
-17:34:08.739 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 1
-17:34:57.353 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.581207892822164, epoch = 1 (previous: score = 2.0984366716375877, epoch = 0)
-17:36:47.978 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 100 is 1.702391494395874
-17:36:55.370 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 3.0% complete - Hours remaining to max epoch (est): 4.21253 - Average epoch duration: 2.6056888 minutes
-17:36:55.370 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 2
-17:37:41.395 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.370179264573553, epoch = 2 (previous: score = 1.581207892822164, epoch = 1)
-17:39:39.212 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 4.0% complete - Hours remaining to max epoch (est): 4.2191133 - Average epoch duration: 2.6369457 minutes
-17:39:39.214 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 3
-17:40:24.876 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2876977305155626, epoch = 3 (previous: score = 1.370179264573553, epoch = 2)
-17:41:15.228 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 150 is 1.4280901456940294
-17:42:19.516 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 5.0% complete - Hours remaining to max epoch (est): 4.1861753 - Average epoch duration: 2.6439 minutes
-17:42:19.517 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 4
-17:43:05.026 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2488547797485776, epoch = 4 (previous: score = 1.2876977305155626, epoch = 3)
-17:44:49.436 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 200 is 1.3343711662856514
-17:45:03.869 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 6.0% complete - Hours remaining to max epoch (est): 4.167002 - Average epoch duration: 2.6597888 minutes
-17:45:03.870 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 5
-17:45:49.981 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.214258343763917, epoch = 5 (previous: score = 1.2488547797485776, epoch = 4)
-17:47:43.132 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 7.0% complete - Hours remaining to max epoch (est): 4.1214757 - Average epoch duration: 2.6590168 minutes
-17:47:43.133 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 6
-17:48:29.393 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1895974368664801, epoch = 6 (previous: score = 1.214258343763917, epoch = 5)
-17:49:12.118 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 250 is 1.2894406059934758
-17:50:30.519 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 8.0% complete - Hours remaining to max epoch (est): 4.1022224 - Average epoch duration: 2.6753626 minutes
-17:50:30.520 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 7
-17:51:16.538 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1494356406742492, epoch = 7 (previous: score = 1.1895974368664801, epoch = 6)
-17:52:50.736 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 300 is 1.1336487176608956
-17:53:10.550 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 9.0% complete - Hours remaining to max epoch (est): 4.0562515 - Average epoch duration: 2.6744518 minutes
-17:53:10.551 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 8
-17:53:58.006 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.125254423158636, epoch = 8 (previous: score = 1.1494356406742492, epoch = 7)
-17:55:51.441 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 10.0% complete - Hours remaining to max epoch (est): 4.01274 - Average epoch duration: 2.67516 minutes
-17:55:51.443 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 9
-17:56:41.519 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 9: 1.1325651972356285
-17:57:18.963 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 350 is 1.059331749517447
-17:58:42.182 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 11.0% complete - Hours remaining to max epoch (est): 3.9911442 - Average epoch duration: 2.690659 minutes
-17:58:42.183 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 10
-17:59:28.302 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 10: 1.1380830687591066
-18:00:59.094 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 400 is 1.0721557487384183
-18:01:23.879 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 12.0% complete - Hours remaining to max epoch (est): 3.9468281 - Average epoch duration: 2.6910193 minutes
-18:01:23.880 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 11
-18:02:11.294 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 11: 1.1317006322829775
-18:04:07.917 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 13.0% complete - Hours remaining to max epoch (est): 3.9067686 - Average epoch duration: 2.694323 minutes
-18:04:07.918 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 12
-18:04:53.763 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1067098788853584, epoch = 12 (previous: score = 1.125254423158636, epoch = 8)
-18:05:19.219 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 450 is 1.1435921892572234
-18:06:47.052 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 14.0% complete - Hours remaining to max epoch (est): 3.8575559 - Average epoch duration: 2.691318 minutes
-18:06:47.054 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 13
-18:07:34.919 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 13: 1.1492407244196243
-18:08:55.608 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 500 is 1.1213587196296078
-18:09:25.499 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 15.000001% complete - Hours remaining to max epoch (est): 3.8079274 - Average epoch duration: 2.687949 minutes
-18:09:25.500 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 14
-18:10:13.578 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 14: 1.111077876420802
-18:12:13.444 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 16.0% complete - Hours remaining to max epoch (est): 3.7728527 - Average epoch duration: 2.6948948 minutes
-18:12:13.446 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 15
-18:12:59.110 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 15: 1.1215236289802848
-18:13:18.404 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 550 is 1.062445231208991
-18:14:54.148 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 17.0% complete - Hours remaining to max epoch (est): 3.7265959 - Average epoch duration: 2.6939244 minutes
-18:14:54.149 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 16
-18:15:41.968 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 16: 1.1097896548270598
-18:16:57.043 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 600 is 1.076157734997656
-18:17:36.691 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 18.0% complete - Hours remaining to max epoch (est): 3.6828449 - Average epoch duration: 2.6947649 minutes
-18:17:36.692 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 17
-18:18:22.350 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0913960172552255, epoch = 17 (previous: score = 1.1067098788853584, epoch = 12)
-18:20:12.636 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 19.0% complete - Hours remaining to max epoch (est): 3.6311328 - Average epoch duration: 2.689728 minutes
-18:20:12.637 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 18
-18:21:04.641 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 18: 1.1152723964587221
-18:21:18.480 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 650 is 1.0703208620867974
-18:22:56.416 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 20.0% complete - Hours remaining to max epoch (est): 3.5889668 - Average epoch duration: 2.691725 minutes
-18:22:56.417 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 19
-18:23:43.822 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 19: 1.1050851370068848
-18:24:53.810 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 700 is 1.1194225174365613
-18:25:40.710 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 21.0% complete - Hours remaining to max epoch (est): 3.5470207 - Average epoch duration: 2.6939397 minutes
-18:25:40.711 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 20
-18:26:26.739 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 20: 1.0962573267255562
-18:28:19.264 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 22.0% complete - Hours remaining to max epoch (est): 3.499086 - Average epoch duration: 2.6916046 minutes
-18:28:19.265 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 21
-18:29:04.554 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 21: 1.1026555536390594
-18:29:13.304 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 750 is 1.0461475362779575
-18:31:04.749 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 23.0% complete - Hours remaining to max epoch (est): 3.4579349 - Average epoch duration: 2.694495 minutes
-18:31:04.750 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 22
-18:31:51.138 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0893922291225675, epoch = 22 (previous: score = 1.0913960172552255, epoch = 17)
-18:32:51.915 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 800 is 1.0942663807483568
-18:33:44.673 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 24.0% complete - Hours remaining to max epoch (est): 3.4114923 - Average epoch duration: 2.6932833 minutes
-18:33:44.674 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 23
-18:34:31.891 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0853354701137845, epoch = 23 (previous: score = 1.0893922291225675, epoch = 22)
-18:36:24.602 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 25.0% complete - Hours remaining to max epoch (est): 3.3652148 - Average epoch duration: 2.6921713 minutes
-18:36:24.603 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 24
-18:37:11.163 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 24: 1.1336087745702121
-18:37:14.364 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 850 is 1.04543829561675
-18:39:11.834 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 26.0% complete - Hours remaining to max epoch (est): 3.3248506 - Average epoch duration: 2.6958258 minutes
-18:39:11.835 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 25
-18:39:59.268 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.076000306462236, epoch = 25 (previous: score = 1.0853354701137845, epoch = 23)
-18:40:52.245 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 900 is 1.10860691910667
-18:41:50.877 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 27.000002% complete - Hours remaining to max epoch (est): 3.2778893 - Average epoch duration: 2.6941557 minutes
-18:41:50.878 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 26
-18:42:37.433 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 26: 1.0900266382242352
-18:44:25.889 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 950 is 1.053492782478931
-18:44:32.854 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 28.0% complete - Hours remaining to max epoch (est): 3.2332203 - Average epoch duration: 2.6943507 minutes
-18:44:32.855 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 27
-18:45:19.649 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 27: 1.1368756253386774
-18:47:14.792 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 29.0% complete - Hours remaining to max epoch (est): 3.1885033 - Average epoch duration: 2.6945097 minutes
-18:47:14.793 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 28
-18:48:02.404 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 28: 1.1212720932696594
-18:48:49.623 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1000 is 1.0543067601004923
-18:49:54.905 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 30.000002% complete - Hours remaining to max epoch (est): 3.1425846 - Average epoch duration: 2.693644 minutes
-18:49:54.906 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 29
-18:50:42.272 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 29: 1.0830871816431065
-18:52:26.711 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1050 is 1.126853817253118
-18:52:40.793 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 31.0% complete - Hours remaining to max epoch (est): 3.1003299 - Average epoch duration: 2.6959393 minutes
-18:52:40.794 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 30
-18:53:26.869 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 30: 1.0884575301458548
-18:55:18.796 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 32.0% complete - Hours remaining to max epoch (est): 3.053183 - Average epoch duration: 2.693985 minutes
-18:55:18.797 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 31
-18:56:04.532 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 31: 1.082264412379865
-18:56:46.797 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1100 is 1.0457371945499083
-18:58:01.223 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 33.0% complete - Hours remaining to max epoch (est): 3.0087276 - Average epoch duration: 2.694383 minutes
-18:58:01.224 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 32
-18:58:48.970 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 32: 1.0863132416546117
-19:00:38.988 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1150 is 1.059463170116389
-19:00:58.329 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 34.0% complete - Hours remaining to max epoch (est): 2.9721484 - Average epoch duration: 2.701953 minutes
-19:00:58.330 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 33
-19:01:44.625 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0718284124609794, epoch = 33 (previous: score = 1.076000306462236, epoch = 25)
-19:03:35.746 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 35.0% complete - Hours remaining to max epoch (est): 2.924691 - Average epoch duration: 2.6997147 minutes
-19:03:35.747 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 34
-19:04:26.198 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 34: 1.0750652997034085
-19:05:03.694 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1200 is 1.0499772760187593
-19:06:25.990 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 36.0% complete - Hours remaining to max epoch (est): 2.8837743 - Average epoch duration: 2.7035384 minutes
-19:06:25.991 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 35
-19:07:14.072 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0695814816292801, epoch = 35 (previous: score = 1.0718284124609794, epoch = 33)
-19:08:41.106 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1250 is 1.0472198462527245
-19:09:06.002 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 37.0% complete - Hours remaining to max epoch (est): 2.837675 - Average epoch duration: 2.7025478 minutes
-19:09:06.003 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 36
-19:09:54.579 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 36: 1.1047225331869852
-19:11:51.162 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 38.0% complete - Hours remaining to max epoch (est): 2.7939959 - Average epoch duration: 2.703867 minutes
-19:11:51.163 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 37
-19:12:38.094 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0623278297253547, epoch = 37 (previous: score = 1.0695814816292801, epoch = 35)
-19:13:03.336 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1300 is 1.0687103462684404
-19:14:32.157 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 39.0% complete - Hours remaining to max epoch (est): 2.7483933 - Average epoch duration: 2.7033377 minutes
-19:14:32.157 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 38
-19:15:19.859 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 38: 1.0655133975758913
-19:16:41.927 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1350 is 1.05530036756547
-19:17:11.961 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 40.0% complete - Hours remaining to max epoch (est): 2.7023401 - Average epoch duration: 2.70234 minutes
-19:17:11.961 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 39
-19:17:58.110 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 39: 1.065742575285903
-19:19:56.811 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 41.0% complete - Hours remaining to max epoch (est): 2.6583836 - Average epoch duration: 2.703441 minutes
-19:19:56.812 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 40
-19:20:44.443 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 40: 1.1185347794679679
-19:21:05.326 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1400 is 1.0666160730003251
-19:22:38.188 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 42.0% complete - Hours remaining to max epoch (est): 2.6130085 - Average epoch duration: 2.7031124 minutes
-19:22:38.189 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 41
-19:23:24.665 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 41: 1.0628517784435298
-19:24:40.101 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1450 is 1.0519705139171298
-19:25:20.198 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 43.0% complete - Hours remaining to max epoch (est): 2.5678911 - Average epoch duration: 2.7030435 minutes
-19:25:20.199 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 42
-19:26:09.500 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0557403346950442, epoch = 42 (previous: score = 1.0623278297253547, epoch = 37)
-19:28:03.123 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 44.0% complete - Hours remaining to max epoch (est): 2.523103 - Average epoch duration: 2.703325 minutes
-19:28:03.124 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 43
-19:28:50.287 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0530452688002507, epoch = 43 (previous: score = 1.0557403346950442, epoch = 42)
-19:29:05.698 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1500 is 1.0476692604405051
-19:30:43.664 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 45.0% complete - Hours remaining to max epoch (est): 2.477485 - Average epoch duration: 2.7027109 minutes
-19:30:43.665 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 44
-19:31:29.271 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 44: 1.0758734834232395
-19:32:42.493 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1550 is 1.048525784859817
-19:33:30.025 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 46.0% complete - Hours remaining to max epoch (est): 2.433808 - Average epoch duration: 2.7042315 minutes
-19:33:30.026 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 45
-19:34:16.963 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 45: 1.0537930994951417
-19:36:09.726 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 47.0% complete - Hours remaining to max epoch (est): 2.387939 - Average epoch duration: 2.7033267 minutes
-19:36:09.727 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 46
-19:36:56.397 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 46: 1.0669965335301357
-19:37:04.950 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1600 is 1.0494638414965372
-19:38:52.219 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 48.0% complete - Hours remaining to max epoch (est): 2.3429708 - Average epoch duration: 2.7034276 minutes
-19:38:52.219 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 47
-19:39:41.961 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 47: 1.0560642993222982
-19:40:46.748 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1650 is 1.0479654309326598
-19:41:39.855 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 49.0% complete - Hours remaining to max epoch (est): 2.299484 - Average epoch duration: 2.7052753 minutes
-19:41:39.855 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 48
-19:42:29.879 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 48: 1.0713334958347547
-19:44:22.303 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 50.0% complete - Hours remaining to max epoch (est): 2.2544327 - Average epoch duration: 2.7053192 minutes
-19:44:22.303 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 49
-19:45:08.811 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 49: 1.0632004495538816
-19:45:11.970 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1700 is 1.0623272716252123
-19:47:06.310 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 51.0% complete - Hours remaining to max epoch (est): 2.2097943 - Average epoch duration: 2.7058706 minutes
-19:47:06.310 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 50
-19:47:51.798 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 50: 1.075334257865303
-19:48:45.675 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1750 is 1.0459316441663338
-19:49:46.539 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 52.0% complete - Hours remaining to max epoch (est): 2.1641524 - Average epoch duration: 2.7051904 minutes
-19:49:46.540 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 51
-19:50:32.626 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 51: 1.0630687558012477
-19:52:23.158 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1800 is 1.1066198688548514
-19:52:30.192 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 52.999996% complete - Hours remaining to max epoch (est): 2.1193962 - Average epoch duration: 2.7056122 minutes
-19:52:30.192 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 52
-19:53:16.113 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 52: 1.0858096744416417
-19:55:08.093 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 54.000004% complete - Hours remaining to max epoch (est): 2.073253 - Average epoch duration: 2.704243 minutes
-19:55:08.094 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 53
-19:55:53.451 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 53: 1.0589240905045862
-19:56:42.678 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1850 is 1.0463280800135646
-19:57:46.194 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 55.0% complete - Hours remaining to max epoch (est): 2.0272381 - Average epoch duration: 2.7029846 minutes
-19:57:46.194 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 54
-19:58:32.219 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 54: 1.054494383285735
-20:00:16.543 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1900 is 1.0664072094498007
-20:00:31.436 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 56.0% complete - Hours remaining to max epoch (est): 1.9828572 - Average epoch duration: 2.703896 minutes
-20:00:31.436 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 55
-20:01:18.785 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 55: 1.0584452852937696
-20:03:11.525 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 57.0% complete - Hours remaining to max epoch (est): 1.9373426 - Average epoch duration: 2.7032688 minutes
-20:03:11.526 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 56
-20:03:57.563 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 56: 1.0587704101426128
-20:04:39.612 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1950 is 1.0737737141698083
-20:05:53.473 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 58.0% complete - Hours remaining to max epoch (est): 1.8922384 - Average epoch duration: 2.7031972 minutes
-20:05:53.476 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 57
-20:06:42.970 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 57: 1.0570121901031595
-20:08:15.147 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2000 is 1.0513850982897524
-20:08:34.656 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 58.999996% complete - Hours remaining to max epoch (est): 1.8469903 - Average epoch duration: 2.7029123 minutes
-20:08:34.657 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 58
-20:09:23.830 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 58: 1.059125885071175
-20:11:15.837 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 60.000004% complete - Hours remaining to max epoch (est): 1.8017578 - Average epoch duration: 2.7026367 minutes
-20:11:15.839 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 59
-20:12:04.210 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 59: 1.053962502360862
-20:12:41.059 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2050 is 1.0513209676473783
-20:14:07.336 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 61.0% complete - Hours remaining to max epoch (est): 1.7583725 - Average epoch duration: 2.7051888 minutes
-20:14:07.344 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 60
-20:14:58.887 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 60: 1.0541118882003906
-20:16:27.253 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2100 is 1.0458213263939917
-20:16:52.213 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 62.0% complete - Hours remaining to max epoch (est): 1.713723 - Average epoch duration: 2.7058783 minutes
-20:16:52.213 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 61
-20:17:40.079 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 61: 1.0779371536785713
-20:19:38.853 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 63.0% complete - Hours remaining to max epoch (est): 1.6693244 - Average epoch duration: 2.7070127 minutes
-20:19:38.854 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 62
-20:20:24.722 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 62: 1.0539647768808789
-20:20:49.154 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2150 is 1.0874702671319891
-20:22:18.336 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 64.0% complete - Hours remaining to max epoch (est): 1.6237485 - Average epoch duration: 2.7062476 minutes
-20:22:18.336 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 63
-20:23:04.549 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 63: 1.0833712585109638
-20:23:04.609 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Hit epoch termination condition at epoch 63. Details: ScoreImprovementEpochTerminationCondition(maxEpochsWithNoImprovement=20, minImprovement=0.0)
-20:23:05.366 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Training complete.
-20:23:05.366 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Termination reason: EpochTerminationCondition
-20:23:05.366 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Total epochs: 64
-20:23:05.367 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Best epoch number: 43
-20:23:05.367 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Score at best epoch: 0.0
-20:23:05.367 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Evaluating best model accuracy using testing data directory...
-20:23:24.296 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - 
+22:31:00.738 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Configuring transfer learning...
+22:31:00.745 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Building ComputationGraph...
+22:31:00.875 [main] INFO  org.deeplearning4j.nn.layers.FrozenLayer - Gradients for the frozen layer are not set and will therefore will not be updated.Warning will be issued only once per instance
+22:31:00.909 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Configuring Early Stopping...
+22:31:02.053 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Starting network training with EarlyStopping...
+22:31:02.055 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Starting early stopping training
+22:31:03.210 [main] INFO  org.deeplearning4j.nn.layers.FrozenLayer - Frozen layer instance found! Frozen layers are treated as always in test mode. Warning will only be issued once per instance
+22:31:14.510 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 0 is 5.848510426331874
+22:33:12.811 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 1.0% complete - Hours remaining to max epoch (est): 3.8585527 - Average epoch duration: 2.3385167 minutes
+22:33:12.813 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 0
+22:34:02.807 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 0: 2.5446012037146843
+22:34:55.966 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 50 is 2.0961621322045683
+22:35:52.675 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 2.0% complete - Hours remaining to max epoch (est): 4.085715 - Average epoch duration: 2.5014584 minutes
+22:35:52.677 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 1
+22:36:39.474 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.9358217241141644, epoch = 1 (previous: score = 2.5446012037146843, epoch = 0)
+22:38:29.074 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 100 is 1.9246873129682784
+22:38:36.220 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 3.0% complete - Hours remaining to max epoch (est): 4.1648836 - Average epoch duration: 2.5762222 minutes
+22:38:36.220 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 2
+22:39:21.616 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.6332220732258902, epoch = 2 (previous: score = 1.9358217241141644, epoch = 1)
+22:41:16.394 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 4.0% complete - Hours remaining to max epoch (est): 4.159293 - Average epoch duration: 2.5995584 minutes
+22:41:16.395 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 3
+22:42:01.850 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.4861918224269872, epoch = 3 (previous: score = 1.6332220732258902, epoch = 2)
+22:42:49.031 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 150 is 1.598819219166108
+22:43:55.225 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 5.0% complete - Hours remaining to max epoch (est): 4.1310487 - Average epoch duration: 2.6090834 minutes
+22:43:55.226 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 4
+22:44:44.315 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.3743707373172787, epoch = 4 (previous: score = 1.4861918224269872, epoch = 3)
+22:46:29.006 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 200 is 1.62102771225543
+22:46:43.488 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 6.0% complete - Hours remaining to max epoch (est): 4.1385546 - Average epoch duration: 2.6416304 minutes
+22:46:43.489 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 5
+22:47:28.202 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.3291208481810592, epoch = 5 (previous: score = 1.3743707373172787, epoch = 4)
+22:49:20.680 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 7.0% complete - Hours remaining to max epoch (est): 4.089712 - Average epoch duration: 2.6385238 minutes
+22:49:20.681 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 6
+22:50:08.661 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2833885913663872, epoch = 6 (previous: score = 1.3291208481810592, epoch = 5)
+22:50:50.764 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 250 is 1.2161071381712165
+22:52:08.123 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 8.0% complete - Hours remaining to max epoch (est): 4.0749035 - Average epoch duration: 2.6575458 minutes
+22:52:08.124 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 7
+22:52:52.628 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2735983937194162, epoch = 7 (previous: score = 1.2833885913663872, epoch = 6)
+22:54:24.796 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 300 is 1.148117091057805
+22:54:44.220 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 9.0% complete - Hours remaining to max epoch (est): 4.021189 - Average epoch duration: 2.6513333 minutes
+22:54:44.221 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 8
+22:55:29.203 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2361716771197435, epoch = 8 (previous: score = 1.2735983937194162, epoch = 7)
+22:57:20.224 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 10.0% complete - Hours remaining to max epoch (est): 3.9693077 - Average epoch duration: 2.646205 minutes
+22:57:20.226 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 9
+22:58:05.909 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2078865714584641, epoch = 9 (previous: score = 1.2361716771197435, epoch = 8)
+22:58:43.051 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 350 is 1.2895658806841284
+23:00:05.814 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 11.0% complete - Hours remaining to max epoch (est): 3.9405286 - Average epoch duration: 2.6565363 minutes
+23:00:05.816 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 10
+23:00:52.191 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.2026516141339225, epoch = 10 (previous: score = 1.2078865714584641, epoch = 9)
+23:02:19.112 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 400 is 1.1823420284576835
+23:02:43.463 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 12.0% complete - Hours remaining to max epoch (est): 3.8927023 - Average epoch duration: 2.6541152 minutes
+23:02:43.464 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 11
+23:03:34.888 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1803910130535138, epoch = 11 (previous: score = 1.2026516141339225, epoch = 10)
+23:05:32.048 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 13.0% complete - Hours remaining to max epoch (est): 3.8658268 - Average epoch duration: 2.6660872 minutes
+23:05:32.049 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 12
+23:06:18.306 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1750875492895045, epoch = 12 (previous: score = 1.1803910130535138, epoch = 11)
+23:06:43.538 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 450 is 1.297518996515666
+23:08:10.395 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 14.0% complete - Hours remaining to max epoch (est): 3.81863 - Average epoch duration: 2.6641605 minutes
+23:08:10.396 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 13
+23:08:55.769 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1702239006762767, epoch = 13 (previous: score = 1.1750875492895045, epoch = 12)
+23:10:16.250 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 500 is 1.0786485762356597
+23:10:45.333 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 15.000001% complete - Hours remaining to max epoch (est): 3.7664967 - Average epoch duration: 2.6587033 minutes
+23:10:45.334 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 14
+23:11:30.984 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1521684216198433, epoch = 14 (previous: score = 1.1702239006762767, epoch = 13)
+23:13:26.153 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 16.0% complete - Hours remaining to max epoch (est): 3.7240758 - Average epoch duration: 2.6600542 minutes
+23:13:26.154 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 15
+23:14:12.051 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 15: 1.1572110586297646
+23:14:31.080 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 550 is 1.184338308377499
+23:16:00.221 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 17.0% complete - Hours remaining to max epoch (est): 3.6722345 - Average epoch duration: 2.6546273 minutes
+23:16:00.223 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 16
+23:16:46.298 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1505273934321267, epoch = 16 (previous: score = 1.1521684216198433, epoch = 14)
+23:18:01.290 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 600 is 1.076299677871222
+23:18:40.689 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 18.0% complete - Hours remaining to max epoch (est): 3.6294985 - Average epoch duration: 2.6557305 minutes
+23:18:40.689 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 17
+23:19:25.873 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.145745471552112, epoch = 17 (previous: score = 1.1505273934321267, epoch = 16)
+23:21:13.056 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 19.0% complete - Hours remaining to max epoch (est): 3.576973 - Average epoch duration: 2.6496096 minutes
+23:21:13.056 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 18
+23:21:58.914 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1383843038279695, epoch = 18 (previous: score = 1.145745471552112, epoch = 17)
+23:22:14.162 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 650 is 1.1050772601640266
+23:23:46.442 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 20.0% complete - Hours remaining to max epoch (est): 3.5266023 - Average epoch duration: 2.6449516 minutes
+23:23:46.442 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 19
+23:24:30.661 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1230801880313541, epoch = 19 (previous: score = 1.1383843038279695, epoch = 18)
+23:25:38.857 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 700 is 1.08943782828059
+23:26:23.603 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 21.0% complete - Hours remaining to max epoch (est): 3.4809146 - Average epoch duration: 2.6437325 minutes
+23:26:23.609 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 20
+23:27:08.901 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 20: 1.1316955689568575
+23:28:55.353 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 22.0% complete - Hours remaining to max epoch (est): 3.4300828 - Average epoch duration: 2.638525 minutes
+23:28:55.353 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 21
+23:29:40.514 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1169564711696545, epoch = 21 (previous: score = 1.1230801880313541, epoch = 19)
+23:29:49.204 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 750 is 1.0752713008512014
+23:31:31.325 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 23.0% complete - Hours remaining to max epoch (est): 3.3839304 - Average epoch duration: 2.6368291 minutes
+23:31:31.340 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 22
+23:32:16.427 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.110748089359396, epoch = 22 (previous: score = 1.1169564711696545, epoch = 21)
+23:33:13.573 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 800 is 1.0590581668601926
+23:34:03.989 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 24.0% complete - Hours remaining to max epoch (est): 3.3351054 - Average epoch duration: 2.6329777 minutes
+23:34:03.989 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 23
+23:34:49.191 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 23: 1.1217896849693831
+23:36:39.284 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 25.0% complete - Hours remaining to max epoch (est): 3.2889867 - Average epoch duration: 2.6311893 minutes
+23:36:39.284 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 24
+23:37:27.361 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.1004519162557742, epoch = 24 (previous: score = 1.110748089359396, epoch = 22)
+23:37:30.926 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 850 is 1.1031958721953685
+23:39:21.952 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 26.0% complete - Hours remaining to max epoch (est): 3.248926 - Average epoch duration: 2.6342642 minutes
+23:39:21.952 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 25
+23:40:07.526 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 25: 1.1316875682916203
+23:41:05.727 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 900 is 1.071021708194027
+23:42:03.638 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 27.000002% complete - Hours remaining to max epoch (est): 3.2077484 - Average epoch duration: 2.636505 minutes
+23:42:03.638 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 26
+23:42:47.956 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0985068975657528, epoch = 26 (previous: score = 1.1004519162557742, epoch = 24)
+23:44:36.536 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 950 is 1.1252915073184198
+23:44:43.033 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 28.0% complete - Hours remaining to max epoch (est): 3.1646662 - Average epoch duration: 2.637222 minutes
+23:44:43.033 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 27
+23:45:28.304 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 27: 1.1066388405374292
+23:47:15.043 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 29.0% complete - Hours remaining to max epoch (est): 3.1164804 - Average epoch duration: 2.6336455 minutes
+23:47:15.043 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 28
+23:47:59.012 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 28: 1.1014462170289716
+23:48:44.465 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1000 is 1.0580919865147176
+23:49:50.560 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 30.000002% complete - Hours remaining to max epoch (est): 3.070964 - Average epoch duration: 2.632255 minutes
+23:49:50.560 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 29
+23:50:35.708 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 29: 1.1219776096953007
+23:52:22.353 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1050 is 1.070580088793377
+23:52:35.316 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 31.0% complete - Hours remaining to max epoch (est): 3.031311 - Average epoch duration: 2.6359227 minutes
+23:52:35.316 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 30
+23:53:19.771 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 30: 1.0985145626229342
+23:55:08.301 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 32.0% complete - Hours remaining to max epoch (est): 2.9843266 - Average epoch duration: 2.6332297 minutes
+23:55:08.301 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 31
+23:55:52.829 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 31: 1.1036164142064528
+23:56:32.776 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1100 is 1.1143215639351687
+23:57:43.848 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 33.0% complete - Hours remaining to max epoch (est): 2.9390602 - Average epoch duration: 2.6319938 minutes
+23:57:43.848 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 32
+23:58:29.847 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0870037935757737, epoch = 32 (previous: score = 1.0985068975657528, epoch = 26)
+23:59:59.453 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1150 is 1.0768549951197743
+00:00:17.879 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 34.0% complete - Hours remaining to max epoch (est): 2.893096 - Average epoch duration: 2.6300871 minutes
+00:00:17.879 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 33
+00:01:03.593 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 33: 1.0963057454983198
+00:02:50.104 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 35.0% complete - Hours remaining to max epoch (est): 2.8463826 - Average epoch duration: 2.62743 minutes
+00:02:50.104 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 34
+00:03:35.080 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 34: 1.1026708477482543
+00:04:10.977 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1200 is 1.0976504378565637
+00:05:30.882 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 36.0% complete - Hours remaining to max epoch (est): 2.8041391 - Average epoch duration: 2.6288805 minutes
+00:05:30.882 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 35
+00:06:16.858 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 35: 1.0965445795968576
+00:07:42.988 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1250 is 1.054991220693218
+00:08:07.047 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 37.0% complete - Hours remaining to max epoch (est): 2.7595825 - Average epoch duration: 2.6281738 minutes
+00:08:07.048 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 36
+00:08:52.707 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0789690923765336, epoch = 36 (previous: score = 1.0870037935757737, epoch = 32)
+00:10:48.588 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 38.0% complete - Hours remaining to max epoch (est): 2.7175255 - Average epoch duration: 2.629863 minutes
+00:10:48.589 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 37
+00:11:39.651 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 37: 1.0923149079506256
+00:12:05.088 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1300 is 1.0730733551968343
+00:13:28.863 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 39.0% complete - Hours remaining to max epoch (est): 2.6747727 - Average epoch duration: 2.6309242 minutes
+00:13:28.864 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 38
+00:14:15.942 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 38: 1.0898175318549863
+00:15:36.106 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1350 is 1.0433755718115898
+00:16:06.057 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 40.0% complete - Hours remaining to max epoch (est): 2.6306481 - Average epoch duration: 2.6306484 minutes
+00:16:06.058 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 39
+00:16:56.398 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0767344152627751, epoch = 39 (previous: score = 1.0789690923765336, epoch = 36)
+00:18:52.258 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 41.0% complete - Hours remaining to max epoch (est): 2.5901473 - Average epoch duration: 2.634048 minutes
+00:18:52.262 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 40
+00:19:38.589 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 40: 1.0816721656910107
+00:19:57.970 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1400 is 1.0439187969681172
+00:21:27.993 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 42.0% complete - Hours remaining to max epoch (est): 2.545361 - Average epoch duration: 2.6331322 minutes
+00:21:27.994 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 41
+00:22:13.827 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 41: 1.0818532850687634
+00:23:29.308 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1450 is 1.0536724484300517
+00:24:08.507 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 43.0% complete - Hours remaining to max epoch (est): 2.5024056 - Average epoch duration: 2.6341112 minutes
+00:24:08.508 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 42
+00:24:56.187 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0741015369509141, epoch = 42 (previous: score = 1.0767344152627751, epoch = 39)
+00:26:45.644 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 44.0% complete - Hours remaining to max epoch (est): 2.4581819 - Average epoch duration: 2.6337667 minutes
+00:26:45.645 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 43
+00:27:30.848 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0720895715504188, epoch = 43 (previous: score = 1.0741015369509141, epoch = 42)
+00:27:45.162 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1500 is 1.173875283273389
+00:29:21.731 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 45.0% complete - Hours remaining to max epoch (est): 2.4136271 - Average epoch duration: 2.633048 minutes
+00:29:21.731 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 44
+00:30:10.205 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 44: 1.0746071303328542
+00:31:18.665 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1550 is 1.0444924114109337
+00:32:05.139 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 46.0% complete - Hours remaining to max epoch (est): 2.3715127 - Average epoch duration: 2.635014 minutes
+00:32:05.140 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 45
+00:32:50.630 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 45: 1.0979166588472666
+00:34:40.125 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 47.0% complete - Hours remaining to max epoch (est): 2.3266206 - Average epoch duration: 2.6339095 minutes
+00:34:40.126 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 46
+00:35:25.143 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0688619447300558, epoch = 46 (previous: score = 1.0720895715504188, epoch = 43)
+00:35:33.888 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1600 is 1.0497427341133014
+00:37:20.438 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 48.0% complete - Hours remaining to max epoch (est): 2.283407 - Average epoch duration: 2.6347003 minutes
+00:37:20.439 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 47
+00:38:07.284 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 47: 1.0941140382198884
+00:39:07.586 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1650 is 1.0414245006899754
+00:40:00.254 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 49.0% complete - Hours remaining to max epoch (est): 2.2399964 - Average epoch duration: 2.6352901 minutes
+00:40:00.255 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 48
+00:40:45.477 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 48: 1.0727750730475971
+00:42:34.192 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 50.0% complete - Hours remaining to max epoch (est): 2.1949136 - Average epoch duration: 2.633897 minutes
+00:42:34.193 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 49
+00:43:19.502 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 49: 1.076535841005106
+00:43:22.524 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1700 is 1.0687546870645104
+00:45:14.546 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 51.0% complete - Hours remaining to max epoch (est): 2.1516354 - Average epoch duration: 2.6346552 minutes
+00:45:14.546 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 50
+00:45:59.232 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 50: 1.0739022762550834
+00:46:51.823 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1750 is 1.0523289634742719
+00:47:49.061 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 52.0% complete - Hours remaining to max epoch (est): 2.1068103 - Average epoch duration: 2.6335132 minutes
+00:47:49.062 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 51
+00:48:34.213 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 51: 1.0724245263467798
+00:50:22.903 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1800 is 1.0576000464136732
+00:50:29.630 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 52.999996% complete - Hours remaining to max epoch (est): 2.0635483 - Average epoch duration: 2.6343174 minutes
+00:50:29.630 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 52
+00:51:17.496 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 52: 1.078953560552977
+00:53:10.664 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 54.000004% complete - Hours remaining to max epoch (est): 2.0203476 - Average epoch duration: 2.6352358 minutes
+00:53:10.665 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 53
+00:53:57.536 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0676405231853983, epoch = 53 (previous: score = 1.0688619447300558, epoch = 46)
+00:54:45.914 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1850 is 1.0672439169306782
+00:55:50.292 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 55.0% complete - Hours remaining to max epoch (est): 1.9767714 - Average epoch duration: 2.6356945 minutes
+00:55:50.292 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 54
+00:56:42.243 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0668609559479958, epoch = 54 (previous: score = 1.0676405231853983, epoch = 53)
+00:58:24.982 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1900 is 1.0459616982915765
+00:58:40.172 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 56.0% complete - Hours remaining to max epoch (est): 1.9354045 - Average epoch duration: 2.6391883 minutes
+00:58:40.172 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 55
+00:59:26.704 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0621628821330633, epoch = 55 (previous: score = 1.0668609559479958, epoch = 54)
+01:01:17.324 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 57.0% complete - Hours remaining to max epoch (est): 1.8911667 - Average epoch duration: 2.6388373 minutes
+01:01:17.324 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 56
+01:02:02.626 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 56: 1.0644687645099606
+01:02:43.698 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 1950 is 1.0541960580595053
+01:03:56.555 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 58.0% complete - Hours remaining to max epoch (est): 1.8473673 - Average epoch duration: 2.639096 minutes
+01:03:56.555 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 57
+01:04:44.839 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 57: 1.0645117700240643
+01:06:15.091 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2000 is 1.0767157574262824
+01:06:33.745 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 58.999996% complete - Hours remaining to max epoch (est): 1.8031592 - Average epoch duration: 2.6387694 minutes
+01:06:33.746 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 58
+01:07:19.882 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 58: 1.0693988309599158
+01:09:12.218 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 60.000004% complete - Hours remaining to max epoch (est): 1.7592068 - Average epoch duration: 2.6388102 minutes
+01:09:12.218 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 59
+01:09:59.796 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 59: 1.0720341155502398
+01:10:35.913 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2050 is 1.044512980750702
+01:11:55.401 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 61.0% complete - Hours remaining to max epoch (est): 1.716089 - Average epoch duration: 2.6401367 minutes
+01:11:55.406 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 60
+01:12:45.836 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 60: 1.092694391526514
+01:14:10.658 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2100 is 1.0568659017095514
+01:14:34.783 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 62.0% complete - Hours remaining to max epoch (est): 1.6722524 - Average epoch duration: 2.6403985 minutes
+01:14:34.783 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 61
+01:15:25.294 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 61: 1.0758493349882712
+01:17:19.927 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 63.0% complete - Hours remaining to max epoch (est): 1.6293416 - Average epoch duration: 2.6421766 minutes
+01:17:19.929 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 62
+01:18:09.452 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 62: 1.0752318325423789
+01:18:35.251 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2150 is 1.05004510685001
+01:20:00.510 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 64.0% complete - Hours remaining to max epoch (est): 1.5856266 - Average epoch duration: 2.642711 minutes
+01:20:00.512 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 63
+01:20:46.595 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 63: 1.0636267052698996
+01:22:07.533 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2200 is 1.0431552381479527
+01:22:36.701 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 65.0% complete - Hours remaining to max epoch (est): 1.5412264 - Average epoch duration: 2.6421022 minutes
+01:22:36.701 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 64
+01:23:26.949 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 64: 1.0623227383815494
+01:25:24.486 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 66.0% complete - Hours remaining to max epoch (est): 1.4985163 - Average epoch duration: 2.6444407 minutes
+01:25:24.487 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 65
+01:26:09.531 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 65: 1.0696541995906363
+01:26:28.494 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2250 is 1.045368763614125
+01:27:58.600 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 67.0% complete - Hours remaining to max epoch (est): 1.4538195 - Average epoch duration: 2.6433084 minutes
+01:27:58.601 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 66
+01:28:44.080 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 66: 1.0830219213483856
+01:30:03.345 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2300 is 1.0534088905165881
+01:30:42.529 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 68.0% complete - Hours remaining to max epoch (est): 1.410461 - Average epoch duration: 2.6446147 minutes
+01:30:42.529 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 67
+01:31:35.522 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 67: 1.0649945716236187
+01:33:28.218 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 69.0% complete - Hours remaining to max epoch (est): 1.367259 - Average epoch duration: 2.6463082 minutes
+01:33:28.218 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 68
+01:34:16.539 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 68: 1.0680020609610117
+01:34:32.427 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2350 is 1.0428958375026096
+01:36:08.058 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 70.0% complete - Hours remaining to max epoch (est): 1.3232808 - Average epoch duration: 2.6465611 minutes
+01:36:08.059 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 69
+01:36:57.877 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 69: 1.070687953094679
+01:38:08.645 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2400 is 1.0493437302266997
+01:38:54.620 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 71.0% complete - Hours remaining to max epoch (est): 1.2800527 - Average epoch duration: 2.6483848 minutes
+01:38:54.620 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 70
+01:39:41.801 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 70: 1.082960541998232
+01:41:34.979 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 72.0% complete - Hours remaining to max epoch (est): 1.2360702 - Average epoch duration: 2.648722 minutes
+01:41:34.979 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 71
+01:42:23.311 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 71: 1.0666526859132357
+01:42:32.144 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2450 is 1.0455991150066866
+01:44:18.809 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 73.0% complete - Hours remaining to max epoch (est): 1.1924291 - Average epoch duration: 2.6498423 minutes
+01:44:18.809 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 72
+01:45:04.976 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0605679723325534, epoch = 72 (previous: score = 1.0621628821330633, epoch = 55)
+01:46:02.631 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2500 is 1.0452863967162223
+01:46:53.979 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 74.0% complete - Hours remaining to max epoch (est): 1.147892 - Average epoch duration: 2.6489816 minutes
+01:46:53.979 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 73
+01:47:40.381 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 73: 1.0657143301891148
+01:49:30.255 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 75.0% complete - Hours remaining to max epoch (est): 1.1034956 - Average epoch duration: 2.6483896 minutes
+01:49:30.256 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 74
+01:50:17.949 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 74: 1.0754728797423092
+01:50:21.860 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2550 is 1.0555350203045313
+01:52:14.645 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 76.0% complete - Hours remaining to max epoch (est): 1.0598371 - Average epoch duration: 2.649593 minutes
+01:52:14.648 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 75
+01:53:09.531 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 75: 1.0697394412458299
+01:54:02.082 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2600 is 1.0434352494014216
+01:55:03.487 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 77.0% complete - Hours remaining to max epoch (est): 1.0164957 - Average epoch duration: 2.6517286 minutes
+01:55:03.489 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 76
+01:55:54.485 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0572576553214774, epoch = 76 (previous: score = 1.0605679723325534, epoch = 72)
+01:57:48.643 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2650 is 1.0650398890103483
+01:57:55.347 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 78.0% complete - Hours remaining to max epoch (est): 0.9733002 - Average epoch duration: 2.654454 minutes
+01:57:55.347 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 77
+01:58:40.620 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 77: 1.0615830411796423
+02:00:31.729 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 79.0% complete - Hours remaining to max epoch (est): 0.9288459 - Average epoch duration: 2.6538455 minutes
+02:00:31.731 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 78
+02:01:17.323 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 78: 1.0745409569977953
+02:02:04.508 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2700 is 1.066320156501745
+02:03:07.462 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 80.0% complete - Hours remaining to max epoch (est): 0.8843727 - Average epoch duration: 2.653117 minutes
+02:03:07.465 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 79
+02:03:54.541 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 79: 1.1347868381185295
+02:05:38.073 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2750 is 1.0470837719256565
+02:05:51.588 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 81.0% complete - Hours remaining to max epoch (est): 0.8404753 - Average epoch duration: 2.6541333 minutes
+02:05:51.588 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 80
+02:06:45.348 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 80: 1.0694946321990324
+02:08:38.349 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 82.0% complete - Hours remaining to max epoch (est): 0.7966976 - Average epoch duration: 2.6556597 minutes
+02:08:38.350 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 81
+02:09:26.439 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 81: 1.1444474161051592
+02:10:12.135 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2800 is 1.0588438076336784
+02:11:29.155 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 83.0% complete - Hours remaining to max epoch (est): 0.7530894 - Average epoch duration: 2.6579626 minutes
+02:11:29.156 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 82
+02:12:14.838 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 82: 1.078351669784164
+02:13:45.357 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2850 is 1.052699877632389
+02:14:04.287 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 84.0% complete - Hours remaining to max epoch (est): 0.70856 - Average epoch duration: 2.6571002 minutes
+02:14:04.289 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 83
+02:14:52.794 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 83: 1.0718841932317544
+02:16:44.204 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 85.0% complete - Hours remaining to max epoch (est): 0.664299 - Average epoch duration: 2.657197 minutes
+02:16:44.207 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 84
+02:17:32.000 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 84: 1.0605953282636267
+02:18:08.848 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2900 is 1.042842706427486
+02:19:28.746 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 86.0% complete - Hours remaining to max epoch (est): 0.620244 - Average epoch duration: 2.658187 minutes
+02:19:28.747 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 85
+02:20:29.807 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 85: 1.0589362095945236
+02:21:58.179 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 2950 is 1.0463291145751592
+02:22:22.201 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 87.0% complete - Hours remaining to max epoch (est): 0.5765195 - Average epoch duration: 2.660862 minutes
+02:22:22.203 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 86
+02:23:14.358 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 86: 1.0595512222156618
+02:25:14.150 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 88.0% complete - Hours remaining to max epoch (est): 0.5326383 - Average epoch duration: 2.663191 minutes
+02:25:14.150 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 87
+02:25:59.753 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 87: 1.0668432103222878
+02:26:24.030 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3000 is 1.0629228382233407
+02:27:48.818 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 89.0% complete - Hours remaining to max epoch (est): 0.48807597 - Average epoch duration: 2.6622317 minutes
+02:27:48.819 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 88
+02:28:35.410 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 88: 1.0605859136986813
+02:29:58.289 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3050 is 1.045570850621497
+02:30:29.476 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 90.0% complete - Hours remaining to max epoch (est): 0.44373393 - Average epoch duration: 2.6624029 minutes
+02:30:29.476 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 89
+02:31:19.841 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0548594048170987, epoch = 89 (previous: score = 1.0572576553214774, epoch = 76)
+02:33:16.173 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 91.0% complete - Hours remaining to max epoch (est): 0.3995514 - Average epoch duration: 2.6636763 minutes
+02:33:16.175 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 90
+02:34:02.914 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - New best model: score = 1.0538834647797886, epoch = 90 (previous: score = 1.0548594048170987, epoch = 89)
+02:34:22.763 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3100 is 1.0458458975845235
+02:35:56.242 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 92.0% complete - Hours remaining to max epoch (est): 0.35516262 - Average epoch duration: 2.663721 minutes
+02:35:56.243 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 91
+02:36:45.412 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 91: 1.0572879151310755
+02:38:01.172 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3150 is 1.0460562495306494
+02:38:41.621 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 93.0% complete - Hours remaining to max epoch (est): 0.31088352 - Average epoch duration: 2.664717 minutes
+02:38:41.621 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 92
+02:39:27.493 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 92: 1.0621141063852062
+02:41:17.824 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 94.0% complete - Hours remaining to max epoch (est): 0.26640654 - Average epoch duration: 2.6640642 minutes
+02:41:17.824 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 93
+02:42:03.715 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 93: 1.0576212905454805
+02:42:17.404 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3200 is 1.04597554114567
+02:43:52.935 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 95.0% complete - Hours remaining to max epoch (est): 0.22193623 - Average epoch duration: 2.6632342 minutes
+02:43:52.936 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 94
+02:44:45.645 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 94: 1.0574297266944357
+02:46:06.413 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3250 is 1.066459526035811
+02:46:53.020 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 96.0% complete - Hours remaining to max epoch (est): 0.17778254 - Average epoch duration: 2.6667564 minutes
+02:46:53.021 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 95
+02:47:43.717 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 95: 1.0582615678505765
+02:49:33.224 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 97.0% complete - Hours remaining to max epoch (est): 0.1333394 - Average epoch duration: 2.6667907 minutes
+02:49:33.228 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 96
+02:50:22.746 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 96: 1.059113330682788
+02:50:31.209 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3300 is 1.0464173655502236
+02:52:18.735 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 98.0% complete - Hours remaining to max epoch (est): 0.08892393 - Average epoch duration: 2.6677268 minutes
+02:52:18.735 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 97
+02:53:06.028 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 97: 1.075361756297246
+02:54:04.744 [main] INFO  org.deeplearning4j.optimize.listeners.ScoreIterationListener - Score at iteration 3350 is 1.046061085783711
+02:54:56.725 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 99.0% complete - Hours remaining to max epoch (est): 0.044456482 - Average epoch duration: 2.6673777 minutes
+02:54:56.726 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 98
+02:55:55.640 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 98: 1.0608664825042278
+02:57:50.234 [main] INFO  com.mtheory7.listener.ProgressEpochListener - 100.0% complete - Hours remaining to max epoch (est): -4.7683716E-7 - Average epoch duration: 2.669622 minutes
+02:57:50.235 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Completed training epoch 99
+02:58:37.665 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Score at epoch 99: 1.0645705546866868
+02:58:37.880 [main] INFO  org.deeplearning4j.earlystopping.trainer.BaseEarlyStoppingTrainer - Hit epoch termination condition at epoch 99. Details: MaxEpochsTerminationCondition(100)
+02:58:39.114 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Training complete.
+02:58:39.114 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Termination reason: EpochTerminationCondition
+02:58:39.114 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Total epochs: 100
+02:58:39.114 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Best epoch number: 90
+02:58:39.114 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Score at best epoch: 0.0
+02:58:39.115 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Evaluating best model accuracy using testing data directory...
+02:59:00.631 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - 
 
 ========================Evaluation Metrics========================
  # of classes:    6
- Accuracy:        0.9944
- Precision:       0.9946
- Recall:          0.9944
- F1 Score:        0.9944
+ Accuracy:        1.0000
+ Precision:       1.0000
+ Recall:          1.0000
+ F1 Score:        1.0000
 Precision, recall & F1: macro-averaged (equally weighted avg. of 6 classes)
 
 
@@ -372,28 +504,25 @@ Precision, recall & F1: macro-averaged (equally weighted avg. of 6 classes)
  30  0  0  0  0  0 | 0 = AdmordorsumFloridensis
   0 30  0  0  0  0 | 1 = AdmordorsumGrongingensis
   0  0 30  0  0  0 | 2 = ConcavicepsScobifolium
-  0  0  0 29  1  0 | 3 = NeotesseraVitripalpus
+  0  0  0 30  0  0 | 3 = NeotesseraVitripalpus
   0  0  0  0 30  0 | 4 = PalpatophoraUtiliformis
   0  0  0  0  0 30 | 5 = PorrectofrontusMechadeus
 
 Confusion matrix format: Actual (rowClass) predicted as (columnClass) N times
 ==================================================================
-20:23:24.796 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Model successfully exported to: C:\Users\thesp\Code\deeplearning4j-occlupanid\models\deeplearning4jOcclupanidModel1.2.0.zip
-20:23:24.796 [main] INFO  com.mtheory7.Main - Finished trainModelAndSave function...
-20:23:24.797 [main] INFO  com.mtheory7.Main - Starting model tests...
-20:23:24.857 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Loading saved model from .zip...
-20:23:25.097 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Configuring image preprocessor...
-20:23:25.098 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Scanning directory: C:/Users/thesp/Code/deeplearning4j-occlupanid/trainingData/data
-20:23:25.098 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Logging any images that are incorrect or less than 80% confident...
-20:23:31.484 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_174407502.jpg' | Actual: 'AdmordorsumFloridensis' | Predicted: 'AdmordorsumFloridensis' (Confidence: 73.27%)
-20:23:38.129 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_174855523.jpg' | Actual: 'AdmordorsumFloridensis' | Predicted: 'AdmordorsumFloridensis' (Confidence: 72.86%)
-20:23:58.619 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261101_162247360.jpg' | Actual: 'AdmordorsumGrongingensis' | Predicted: 'AdmordorsumGrongingensis' (Confidence: 76.32%)
-20:24:30.474 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261101_160237991.jpg' | Actual: 'NeotesseraVitripalpus' | Predicted: 'NeotesseraVitripalpus' (Confidence: 74.43%)
-20:24:30.717 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Incorrect: File 'PXL_20261101_160242548.jpg' | Actual: 'NeotesseraVitripalpus' | Predicted: 'PalpatophoraUtiliformis' (Confidence: 96.74%)
-20:24:56.631 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_182400041.jpg' | Actual: 'PalpatophoraUtiliformis' | Predicted: 'PalpatophoraUtiliformis' (Confidence: 41.92%)
-20:25:08.997 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261029_014756166.MACRO_FOCUS.jpg' | Actual: 'PorrectofrontusMechadeus' | Predicted: 'PorrectofrontusMechadeus' (Confidence: 71.62%)
-20:25:13.817 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261029_015117509.MACRO_FOCUS.jpg' | Actual: 'PorrectofrontusMechadeus' | Predicted: 'PorrectofrontusMechadeus' (Confidence: 64.72%)
-20:25:14.548 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Verification complete. Scanned 900 images. Found 1 incorrect predictions.
-20:25:14.548 [main] INFO  com.mtheory7.Main - Finished testing model
-20:25:14.548 [main] INFO  com.mtheory7.Main - Program finished in 2.9356117 hours
-20:25:14.551 [Thread-2] INFO  org.deeplearning4j.ui.VertxUIServer - Deeplearning4j UI server is auto-stopping in shutdown hook.
+02:59:01.112 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Model successfully exported to: C:\Users\thesp\Code\deeplearning4j-occlupanid\models\deeplearning4jOcclupanidModel1.2.0.zip
+02:59:01.112 [main] INFO  com.mtheory7.Main - Finished trainModelAndSave function...
+02:59:01.112 [main] INFO  com.mtheory7.Main - Starting model tests...
+02:59:01.121 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Loading saved model from .zip...
+02:59:01.395 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Configuring image preprocessor...
+02:59:01.401 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Scanning directory: C:/Users/thesp/Code/deeplearning4j-occlupanid/trainingData/data
+02:59:01.402 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Logging any images that are incorrect or less than 80% confident...
+02:59:08.169 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_174407502.jpg' | Actual: 'AdmordorsumFloridensis' | Predicted: 'AdmordorsumFloridensis' (Confidence: 74.51%)
+02:59:14.617 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_174855523.jpg' | Actual: 'AdmordorsumFloridensis' | Predicted: 'AdmordorsumFloridensis' (Confidence: 51.18%)
+03:00:11.737 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261101_160242548.jpg' | Actual: 'NeotesseraVitripalpus' | Predicted: 'NeotesseraVitripalpus' (Confidence: 79.78%)
+03:00:22.425 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_181114468.jpg' | Actual: 'PalpatophoraUtiliformis' | Predicted: 'PalpatophoraUtiliformis' (Confidence: 75.73%)
+03:00:51.498 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Incorrect: File 'PXL_20261029_014830107.MACRO_FOCUS.jpg' | Actual: 'PorrectofrontusMechadeus' | Predicted: 'PalpatophoraUtiliformis' (Confidence: 52.35%)
+03:00:55.531 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Verification complete. Scanned 900 images. Found 1 incorrect predictions.
+03:00:55.531 [main] INFO  com.mtheory7.Main - Finished testing model
+03:00:55.531 [main] INFO  com.mtheory7.Main - Program finished in 4.500842 hours
+03:00:55.537 [Thread-2] INFO  org.deeplearning4j.ui.VertxUIServer - Deeplearning4j UI server is auto-stopping in shutdown hook.
