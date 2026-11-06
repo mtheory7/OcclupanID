@@ -56,7 +56,7 @@ import static com.mtheory7.Main.CLASS_LABELS;
 import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
-    public static final int MAX_EPOCHS = 50;
+    public static final int MAX_EPOCHS = 100;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
     private static final int EPOCH_TERMINATION_AMOUNT = 20;
     private static final double LEARNING_RATE = 1e-4;
@@ -95,11 +95,11 @@ public class OcclupanidModelTrainer {
         );
         PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
                 new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new Greyscale3ChannelTransform(), 0.3),
-                new Pair<>(new FlipImageTransform(1), 0.3),
-                new Pair<>(new RotateImageTransform(90), 0.3),
                 new Pair<>(new CropImageTransform(50), 1.0),
-                new Pair<>(new CropImageTransform(5), 0.3)
+                new Pair<>(new CropImageTransform(5), 0.4),
+                new Pair<>(new Greyscale3ChannelTransform(), 0.4),
+                new Pair<>(new FlipImageTransform(1), 0.4),
+                new Pair<>(new RotateImageTransform(90), 0.4)
                 //new Pair<>(new SaveImageTransform("C:/Users/thesp/Code/deeplearning4j-occlupanid/trainingData/data/transformed", "final_pipeline_out", 100), 1.0)
         ), false);
         log.info("trainTransform object:{}", trainTransform);
