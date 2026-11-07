@@ -5,7 +5,7 @@ Currently, the model is very accurate - validation during training reports >99% 
 
 Genus/species names come from the amazing [HORG - The Holotypic Occlupanid Research Group](https://www.horg.com/horg/)
 
-Genus/Species currently supported, more to come(6):
+Genus/species currently supported, more to come(6):
 - Admordorsum floridensis
 - Admordorsum grongingensis
 - Concaviceps scobifolium
@@ -15,5 +15,5 @@ Genus/Species currently supported, more to come(6):
 
 Improvements to come...
 - Remove hard-coded String paths to /data, /models, etc.
-- Make easily runnable using properties file or JSON configuration
+- Make JAR easily runnable using properties file or JSON configuration
 - Support for more occlupanid genus/species
