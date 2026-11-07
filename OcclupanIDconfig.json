@@ -6,7 +6,9 @@
     "AdmordorsumGrongingensis",
     "ConcavicepsScobifolium",
     "NeotesseraVitripalpus",
+    "PalpatophoraGlyphodorsalis",
     "PalpatophoraUtiliformis",
+    "PalpatophoraUtiliformisGrandis",
     "PorrectofrontusMechadeus"
   ],
   "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data",
@@ -17,7 +19,7 @@
   "imageWidth": 224,
   "learningRate": 5e-5,
   "learningWeightDecay": 1e-3,
-  "modelSaveFile": "deeplearning4jOcclupanidModel1.2.1.zip",
+  "modelSaveFile": "deeplearning4jOcclupanidModel1.3.0.zip",
   "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
   "seed": 12345
 }
