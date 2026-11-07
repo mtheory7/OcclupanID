@@ -1,5 +1,6 @@
 package com.mtheory7.model;
 
+import com.mtheory7.OcclupanIDConfig;
 import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.Greyscale3ChannelTransform;
 import com.mtheory7.utils.PadToSquare;
@@ -53,9 +54,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import static com.mtheory7.Main.CLASS_LABELS;
-import static com.mtheory7.Main.MODEL_NAME;
-
 public class OcclupanidModelTrainer {
     public static final int MAX_EPOCHS = 100;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
@@ -68,7 +66,7 @@ public class OcclupanidModelTrainer {
     private static final int BATCH_SIZE = 16;
     private static final long SEED = 12345L;
 
-    public void trainModelAndSave(String modelPath, String dataPath) throws IOException {
+    public void trainModelAndSave(OcclupanIDConfig config) throws IOException {
         log.info("MAX_EPOCHS:{} EPOCH_TERMINATION_AMOUNT:{} LEARNING_RATE:{} WEIGHT_DECAY:{} HEIGHT:{} WIDTH:{} CHANNELS:{} BATCH_SIZE:{} SEED:{}",
                 MAX_EPOCHS, EPOCH_TERMINATION_AMOUNT, LEARNING_RATE, WEIGHT_DECAY, HEIGHT, WIDTH, CHANNELS, BATCH_SIZE, SEED);
 
@@ -76,17 +74,17 @@ public class OcclupanidModelTrainer {
         Nd4j.getMemoryManager().togglePeriodicGc(true);
         Nd4j.getMemoryManager().setAutoGcWindow(5000);
 
-        String modelCheckpointPath = modelPath + File.separator + "checkpoints";
+        String modelCheckpointPath = config.modelSavePath + File.separator + "checkpoints";
         if (!new File(modelCheckpointPath).exists()) //noinspection ResultOfMethodCallIgnored
             new File(modelCheckpointPath).mkdirs();
-        String modelSavePath = modelPath + File.separator + MODEL_NAME;
+        String modelFileName = config.modelSavePath + File.separator + config.modelSaveFile;
 
         UIServer uiServer = UIServer.getInstance();
-        File statsFile = new File(modelPath, "training_stats.dl4j");
+        File statsFile = new File(config.modelSavePath, "training_stats.dl4j");
         StatsStorage statsStorage = new FileStatsStorage(statsFile);
         uiServer.attach(statsStorage);
 
-        File trainingDataDirectory = new File(dataPath);
+        File trainingDataDirectory = new File(config.dataPath);
         FileSplit fileSplit = new FileSplit(trainingDataDirectory, NativeImageLoader.ALLOWED_FORMATS, new Random(SEED));
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
         BalancedPathFilter pathFilter = new BalancedPathFilter(
@@ -121,9 +119,9 @@ public class OcclupanidModelTrainer {
         valRR.initialize(valSplit, valTransform);
         testRR.initialize(testSplit, valTransform);
         log.info("Detected training labels: {}", trainRR.getLabels());
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, CLASS_LABELS.size());
-        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, CLASS_LABELS.size());
-        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, config.classNames.size());
+        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, config.classNames.size());
+        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, config.classNames.size());
 
         DataNormalization scaler = new VGG16ImagePreProcessor();
         trainIter.setPreProcessor(scaler);
@@ -154,7 +152,7 @@ public class OcclupanidModelTrainer {
                 .addLayer("predictions",
                         new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
                                 .nIn(512)
-                                .nOut(CLASS_LABELS.size())
+                                .nOut(config.classNames.size())
                                 .weightInit(org.deeplearning4j.nn.weights.WeightInit.XAVIER)
                                 .activation(Activation.SOFTMAX)
                                 .build(),
@@ -196,8 +194,8 @@ public class OcclupanidModelTrainer {
         Evaluation eval = bestModel.evaluate(testIter);
         log.info(eval.stats());
 
-        File modelSaveFile = new File(modelSavePath);
-        bestModel.save(modelSaveFile, true);
-        log.info("Model successfully exported to: {}", modelSaveFile.getAbsolutePath());
+        File modelFile = new File(modelFileName);
+        bestModel.save(modelFile, true);
+        log.info("Model successfully exported to: {}", modelFile.getAbsolutePath());
     }
 }

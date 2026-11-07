@@ -1,0 +1,13 @@
+{
+  "modelSaveFile": "deeplearning4jOcclupanidModel1.2.0.zip",
+  "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
+  "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data",
+  "classNames": [
+    "AdmordorsumFloridensis",
+    "AdmordorsumGrongingensis",
+    "ConcavicepsScobifolium",
+    "NeotesseraVitripalpus",
+    "PalpatophoraUtiliformis",
+    "PorrectofrontusMechadeus"
+  ]
+}

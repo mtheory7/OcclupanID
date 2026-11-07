@@ -19,12 +19,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.mtheory7.Main.CLASS_LABELS;
-
 public class OcclupanidModelTester {
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTester.class);
 
-    public void predictImages(String modelPath, String imagesPath) throws Exception {
+    public void predictImages(String modelPath, String imagesPath, List<String> classNames) throws Exception {
         log.info("Loading saved model from .zip...");
         ComputationGraph model = ComputationGraph.load(new File(modelPath), false);
 
@@ -57,7 +55,7 @@ public class OcclupanidModelTester {
 
                 INDArray predictions = output[0];
                 int predictedIndex = predictions.argMax(1).getInt(0);
-                String predictedLabel = CLASS_LABELS.get(predictedIndex);
+                String predictedLabel = classNames.get(predictedIndex);
                 double confidence = predictions.getDouble(predictedIndex) * 100.0;
 
                 if (!actualLabel.equals(predictedLabel)) {
