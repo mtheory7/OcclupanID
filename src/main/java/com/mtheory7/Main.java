@@ -21,7 +21,7 @@ public class Main {
             "NeotesseraVitripalpus",
             "PalpatophoraUtiliformis",
             "PorrectofrontusMechadeus");
-    public static final String MODEL_NAME = "deeplearning4jOcclupanidModel1.2.0.zip";
+    public static final String MODEL_NAME = "deeplearning4jOcclupanidModel1.3.0.zip";
     private static final String MODEL_PATH = "C:/Users/thesp/Code/OcclupanID/models";
     private static final String DATA_PATH = "C:/Users/thesp/Code/OcclupanID/trainingData/data";
 

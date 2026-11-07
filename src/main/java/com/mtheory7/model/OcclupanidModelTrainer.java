@@ -6,6 +6,7 @@ import com.mtheory7.utils.PadToSquare;
 import com.mtheory7.utils.SaveImageTransform;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
+import org.datavec.api.split.CollectionInputSplit;
 import org.datavec.api.split.FileSplit;
 import org.datavec.api.split.InputSplit;
 import org.datavec.image.loader.NativeImageLoader;
@@ -49,155 +50,176 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.net.URI;
+import java.util.*;
 
 import static com.mtheory7.Main.CLASS_LABELS;
 import static com.mtheory7.Main.MODEL_NAME;
 
 public class OcclupanidModelTrainer {
-    public static final int MAX_EPOCHS = 100;
+    public static final int MAX_EPOCHS = 50;
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
     private static final int EPOCH_TERMINATION_AMOUNT = 20;
-    private static final double LEARNING_RATE = 5e-5;
+    private static final double LEARNING_RATE = 1e-4;
     private static final double WEIGHT_DECAY = 1e-3;
     private static final int HEIGHT = 224;
     private static final int WIDTH = 224;
     private static final int CHANNELS = 3;
     private static final int BATCH_SIZE = 16;
     private static final long SEED = 12345L;
+    private static final int K_FOLDS = 5;
 
     public void trainModelAndSave(String modelPath, String dataPath) throws IOException {
-        log.info("MAX_EPOCHS:{} EPOCH_TERMINATION_AMOUNT:{} LEARNING_RATE:{} WEIGHT_DECAY:{} HEIGHT:{} WIDTH:{} CHANNELS:{} BATCH_SIZE:{} SEED:{}",
-                MAX_EPOCHS, EPOCH_TERMINATION_AMOUNT, LEARNING_RATE, WEIGHT_DECAY, HEIGHT, WIDTH, CHANNELS, BATCH_SIZE, SEED);
-
-        log.info("Configuring aggressive native memory garbage collection...");
-        Nd4j.getMemoryManager().togglePeriodicGc(true);
-        Nd4j.getMemoryManager().setAutoGcWindow(5000);
-
-        String modelCheckpointPath = modelPath + File.separator + "checkpoints";
-        if (!new File(modelCheckpointPath).exists()) //noinspection ResultOfMethodCallIgnored
-            new File(modelCheckpointPath).mkdirs();
-        String modelSavePath = modelPath + File.separator + MODEL_NAME;
-
-        UIServer uiServer = UIServer.getInstance();
-        File statsFile = new File(modelPath, "training_stats.dl4j");
-        StatsStorage statsStorage = new FileStatsStorage(statsFile);
-        uiServer.attach(statsStorage);
-
         File trainingDataDirectory = new File(dataPath);
-        FileSplit fileSplit = new FileSplit(trainingDataDirectory, NativeImageLoader.ALLOWED_FORMATS, new Random(SEED));
-        ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
-        BalancedPathFilter pathFilter = new BalancedPathFilter(
-                new Random(SEED),
-                NativeImageLoader.ALLOWED_FORMATS,
-                labelMaker
-        );
-        PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
-                new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new CropImageTransform(50), 1.0),
-                new Pair<>(new CropImageTransform(5), 0.4),
-                new Pair<>(new Greyscale3ChannelTransform(), 0.4),
-                new Pair<>(new FlipImageTransform(1), 0.4),
-                new Pair<>(new RotateImageTransform(90), 0.4)
-                //new Pair<>(new SaveImageTransform("C:/Users/thesp/Code/OcclupanID/trainingData/transformed", "final_pipeline_out", 100), 1.0)
-        ), false);
-        log.info("trainTransform object:{}", trainTransform);
-        PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
-                new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new CropImageTransform(50), 1.0)
-        ), false);
-        log.info("valTransform object:{}", valTransform);
-        InputSplit[] splits = fileSplit.sample(pathFilter, 60, 20, 20);
-        InputSplit trainSplit = splits[0];
-        InputSplit valSplit = splits[1];
-        InputSplit testSplit = splits[2];
-        log.info("trainSplit.length():{} valSplit.length():{} testSplit.length():{}", trainSplit.length(), valSplit.length(), testSplit.length());
-        ImageRecordReader trainRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
-        ImageRecordReader valRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
-        ImageRecordReader testRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
-        trainRR.initialize(trainSplit, trainTransform);
-        valRR.initialize(valSplit, valTransform);
-        testRR.initialize(testSplit, valTransform);
-        log.info("Detected training labels: {}", trainRR.getLabels());
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, CLASS_LABELS.size());
-        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, CLASS_LABELS.size());
-        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+        List<List<URI>> partitions = createKFoldPartitions(trainingDataDirectory, K_FOLDS, SEED);
 
-        DataNormalization scaler = new VGG16ImagePreProcessor();
-        trainIter.setPreProcessor(scaler);
-        valIter.setPreProcessor(scaler);
-        testIter.setPreProcessor(scaler);
+        // Aggregator to track metrics across all folds
+        List<Evaluation> foldEvaluations = new ArrayList<>();
 
-        log.info("Loading pre-trained SqueezeNet weights from ImageNet...");
-        SqueezeNet zooModel = SqueezeNet.builder().build();
-        ComputationGraph pretrainedNet = zooModel.initPretrained(PretrainedType.IMAGENET);
-        log.info(pretrainedNet.summary());
+        for (int fold = 0; fold < K_FOLDS; fold++) {
+            log.info("===========================================");
+            log.info("STARTING FOLD {} OF {}", fold + 1, K_FOLDS);
+            log.info("===========================================");
 
-        log.info("Configuring transfer learning...");
-        FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder()
-                .updater(new Adam(LEARNING_RATE))
-                .weightDecay(WEIGHT_DECAY)
-                .seed(SEED)
-                .build();
+            // 1. Assign chunks to Train, Val, Test (e.g., for K=5: 3 chunks Train, 1 Val, 1 Test)
+            List<URI> testURIs = partitions.get(fold);
+            List<URI> valURIs = partitions.get((fold + 1) % K_FOLDS);
+            List<URI> trainURIs = new ArrayList<>();
+            for (int i = 0; i < K_FOLDS; i++) {
+                if (i != fold && i != (fold + 1) % K_FOLDS) {
+                    trainURIs.addAll(partitions.get(i));
+                }
+            }
 
-        log.info("Building ComputationGraph...");
-        ComputationGraph model = new TransferLearning.GraphBuilder(pretrainedNet)
-                .fineTuneConfiguration(fineTuneConf)
-                .setFeatureExtractor("fire7_concat")
-                .removeVertexAndConnections("conv10")
-                .removeVertexAndConnections("relu10")
-                .removeVertexAndConnections("global_average_pooling2d_5")
-                .removeVertexAndConnections("loss")
-                .addLayer("gap", new GlobalPoolingLayer.Builder(PoolingType.AVG).build(), "drop9")
-                .addLayer("predictions",
-                        new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-                                .nIn(512)
-                                .nOut(CLASS_LABELS.size())
-                                .weightInit(org.deeplearning4j.nn.weights.WeightInit.XAVIER)
-                                .activation(Activation.SOFTMAX)
-                                .build(),
-                        "gap")
-                .setOutputs("predictions")
-                .build();
+            InputSplit trainSplit = new CollectionInputSplit(trainURIs);
+            InputSplit valSplit = new CollectionInputSplit(valURIs);
+            InputSplit testSplit = new CollectionInputSplit(testURIs);
 
-        model.setListeners(
-                new ScoreIterationListener(50),
-                new StatsListener(statsStorage),
-                new ProgressEpochListener()
-        );
+            // 2. Initialize RecordReaders with your existing transforms
+            ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
+            ImageRecordReader trainRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
+            ImageRecordReader valRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
+            ImageRecordReader testRR = new ImageRecordReader(HEIGHT, WIDTH, CHANNELS, labelMaker);
 
-        log.info("Configuring Early Stopping...");
-        EarlyStoppingConfiguration<ComputationGraph> esConf = new EarlyStoppingConfiguration.Builder<ComputationGraph>()
-                .epochTerminationConditions(
-                        new MaxEpochsTerminationCondition(MAX_EPOCHS),
-                        new ScoreImprovementEpochTerminationCondition(EPOCH_TERMINATION_AMOUNT)
-                )
-                .scoreCalculator(new DataSetLossCalculator(valIter, true))
-                .evaluateEveryNEpochs(1)
-                .modelSaver(new LocalFileGraphSaver(modelCheckpointPath))
-                .build();
+            PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
+                    new Pair<>(new PadToSquare(), 1.0),
+                    new Pair<>(new CropImageTransform(50), 1.0),
+                    new Pair<>(new CropImageTransform(5), 0.4),
+                    new Pair<>(new Greyscale3ChannelTransform(), 0.4),
+                    new Pair<>(new FlipImageTransform(1), 0.4),
+                    new Pair<>(new RotateImageTransform(90), 0.4)
+                    //new Pair<>(new SaveImageTransform("C:/Users/thesp/Code/OcclupanID/trainingData/transformed", "final_pipeline_out", 100), 1.0)
+            ), false);
+            PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
+                    new Pair<>(new PadToSquare(), 1.0),
+                    new Pair<>(new CropImageTransform(50), 1.0)
+            ), false);
 
-        EarlyStoppingGraphTrainer trainer = new EarlyStoppingGraphTrainer(esConf, model, trainIter);
+            trainRR.initialize(trainSplit, trainTransform); // Keep your PadToSquare/Greyscale pipeline here
+            valRR.initialize(valSplit, valTransform);
+            testRR.initialize(testSplit, valTransform);
 
-        log.info("Starting network training with EarlyStopping...");
-        EarlyStoppingResult<ComputationGraph> result = trainer.fit();
+            DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+            DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, BATCH_SIZE, 1, CLASS_LABELS.size());
+            DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, BATCH_SIZE, 1, CLASS_LABELS.size());
 
-        log.info("Training complete.");
-        log.info("Termination reason: {}", result.getTerminationReason());
-        log.info("Total epochs: {}", result.getTotalEpochs());
-        log.info("Best epoch number: {}", result.getBestModelEpoch());
-        log.info("Score at best epoch: {}", result.getBestModelScore());
+            DataNormalization scaler = new VGG16ImagePreProcessor();
+            trainIter.setPreProcessor(scaler);
+            valIter.setPreProcessor(scaler);
+            testIter.setPreProcessor(scaler);
 
-        ComputationGraph bestModel = result.getBestModel();
+            UIServer uiServer = UIServer.getInstance();
+            File statsFile = new File(modelPath, "training_stats.dl4j");
+            StatsStorage statsStorage = new FileStatsStorage(statsFile);
+            uiServer.attach(statsStorage);
 
-        log.info("Evaluating best model accuracy using testing data directory...");
-        Evaluation eval = bestModel.evaluate(testIter);
-        log.info(eval.stats());
+            // 3. Rebuild the Model from Scratch (MUST BE INSIDE THE LOOP)
+            SqueezeNet zooModel = SqueezeNet.builder().build();
+            ComputationGraph pretrainedNet = zooModel.initPretrained(PretrainedType.IMAGENET);
 
-        File modelSaveFile = new File(modelSavePath);
-        bestModel.save(modelSaveFile, true);
-        log.info("Model successfully exported to: {}", modelSaveFile.getAbsolutePath());
+            log.info("Configuring transfer learning...");
+            FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder()
+                    .updater(new Adam(LEARNING_RATE))
+                    .weightDecay(WEIGHT_DECAY)
+                    .seed(SEED)
+                    .build();
+
+            ComputationGraph model = new TransferLearning.GraphBuilder(pretrainedNet)
+                    .fineTuneConfiguration(fineTuneConf)
+                    .setFeatureExtractor("fire7_concat")
+                    .removeVertexAndConnections("conv10")
+                    .removeVertexAndConnections("relu10")
+                    .removeVertexAndConnections("global_average_pooling2d_5")
+                    .removeVertexAndConnections("loss")
+                    .addLayer("gap", new GlobalPoolingLayer.Builder(PoolingType.AVG).build(), "drop9")
+                    .addLayer("predictions",
+                            new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+                                    .nIn(512).nOut(CLASS_LABELS.size())
+                                    .weightInit(org.deeplearning4j.nn.weights.WeightInit.XAVIER)
+                                    .activation(Activation.SOFTMAX).build(),
+                            "gap")
+                    .setOutputs("predictions")
+                    .build();
+
+            model.setListeners(
+                    new ScoreIterationListener(50),
+                    new StatsListener(statsStorage),
+                    new ProgressEpochListener()
+            );
+
+
+            // 4. Train with Early Stopping
+            String foldCheckpointPath = modelPath + File.separator + "checkpoints_fold_" + fold;
+            EarlyStoppingConfiguration<ComputationGraph> esConf = new EarlyStoppingConfiguration.Builder<ComputationGraph>()
+                    .epochTerminationConditions(
+                            new MaxEpochsTerminationCondition(MAX_EPOCHS),
+                            new ScoreImprovementEpochTerminationCondition(EPOCH_TERMINATION_AMOUNT))
+                    .scoreCalculator(new DataSetLossCalculator(valIter, true))
+                    .evaluateEveryNEpochs(1)
+                    .modelSaver(new LocalFileGraphSaver(foldCheckpointPath))
+                    .build();
+
+            EarlyStoppingGraphTrainer trainer = new EarlyStoppingGraphTrainer(esConf, model, trainIter);
+            EarlyStoppingResult<ComputationGraph> result = trainer.fit();
+            ComputationGraph bestModel = result.getBestModel();
+
+            // 5. Evaluate and Store Metrics
+            Evaluation eval = bestModel.evaluate(testIter);
+            log.info("Fold {} Evaluation: \n{}", fold + 1, eval.stats());
+            foldEvaluations.add(eval);
+
+            // Save the best overall model (optional: save all, or save based on highest fold score)
+            bestModel.save(new File(modelPath + File.separator + MODEL_NAME + "_fold_" + fold), true);
+        }
+
+        // 6. Output Averaged Cross-Validation Results
+        log.info("=== K-FOLD CROSS VALIDATION COMPLETE ===");
+        for (int i = 0; i < foldEvaluations.size(); i++) {
+            log.info("Fold {} Accuracy: {}", i + 1, foldEvaluations.get(i).accuracy());
+        }
+    }
+
+    private List<List<URI>> createKFoldPartitions(File dataDir, int k, long seed) {
+        File[] classDirs = dataDir.listFiles(File::isDirectory);
+        List<List<URI>> folds = new ArrayList<>();
+        for (int i = 0; i < k; i++) folds.add(new ArrayList<>());
+
+        // Stratify by class to ensure equal representation in each fold
+        for (File classDir : classDirs) {
+            File[] images = classDir.listFiles();
+            List<URI> imageURIs = new ArrayList<>();
+            if (images != null) {
+                for (File img : images) imageURIs.add(img.toURI());
+            }
+
+            Collections.shuffle(imageURIs, new Random(seed));
+
+            int foldSize = imageURIs.size() / k;
+            for (int i = 0; i < imageURIs.size(); i++) {
+                int foldIndex = Math.min(i / foldSize, k - 1);
+                folds.get(foldIndex).add(imageURIs.get(i));
+            }
+        }
+        return folds;
     }
 }
