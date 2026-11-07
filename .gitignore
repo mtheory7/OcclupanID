@@ -39,8 +39,6 @@ build/
 .DS_Store
 
 models/*
-!models/deeplearning4jOcclupanidModel1.0.0.zip
-!models/deeplearning4jOcclupanidModel1.1.0.zip
-!models/deeplearning4jOcclupanidModel1.2.0.zip
+!models/deeplearning4jOcclupanidModel*)
 /.idea/
 /.mvn/

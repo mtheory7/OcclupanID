@@ -1,5 +1,5 @@
 {
-  "modelSaveFile": "deeplearning4jOcclupanidModel1.2.0.zip",
+  "modelSaveFile": "deeplearning4jOcclupanidModel1.2.1.zip",
   "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
   "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data",
   "classNames": [
