@@ -1,10 +1,9 @@
 package com.mtheory7.model;
 
-import com.mtheory7.OcclupanIDConfig;
+import com.mtheory7.config.OcclupanIDConfig;
 import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.Greyscale3ChannelTransform;
 import com.mtheory7.utils.PadToSquare;
-import com.mtheory7.utils.SaveImageTransform;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;

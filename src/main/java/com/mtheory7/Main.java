@@ -1,6 +1,7 @@
 package com.mtheory7;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mtheory7.config.OcclupanIDConfig;
 import com.mtheory7.model.OcclupanidModelTester;
 import com.mtheory7.model.OcclupanidModelTrainer;
 import org.slf4j.Logger;
@@ -9,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     protected static final Logger log = LoggerFactory.getLogger(Main.class);
@@ -42,7 +41,7 @@ public class Main {
 
         log.info("Starting model tests...");
         OcclupanidModelTester occlupanidModelTester = new OcclupanidModelTester();
-        occlupanidModelTester.predictImages((config.modelSavePath + File.separator + config.modelSaveFile), config.dataPath, config.classNames);
+        occlupanidModelTester.predictImages(config);
         log.info("Finished testing model");
 
         log.info("Program finished in {} hours", ((float) (Duration.between(START_TIME, Instant.now()).toMillis()) / 1000 / 3600));

@@ -1,4 +1,4 @@
-package com.mtheory7;
+package com.mtheory7.config;
 
 import java.util.List;
 
