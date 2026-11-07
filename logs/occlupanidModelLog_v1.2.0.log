@@ -15,7 +15,7 @@ DEFAULT_ENGINE: samediff::ENGINE_CPU
 HAVE_FLATBUFFERS
 HAVE_OPENBLAS
 22:30:56.329 [vert.x-eventloop-thread-0] INFO  org.deeplearning4j.ui.VertxUIServer - Deeplearning4j UI server started at: http://localhost:9000
-22:30:57.512 [main] INFO  org.deeplearning4j.ui.VertxUIServer - StatsStorage instance attached to UI: FileStatsStorage(C:\Users\thesp\Code\deeplearning4j-occlupanid\models\training_stats.dl4j)
+22:30:57.512 [main] INFO  org.deeplearning4j.ui.VertxUIServer - StatsStorage instance attached to UI: FileStatsStorage(C:\Users\thesp\Code\OcclupanID\models\training_stats.dl4j)
 22:30:58.895 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - trainTransform object:PipelineImageTransform(imageTransforms=[Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=1.0}, Pair{key=CropImageTransform(cropTop=50, cropLeft=50, cropBottom=50, cropRight=50, x=0, y=0), value=1.0}, Pair{key=CropImageTransform(cropTop=5, cropLeft=5, cropBottom=5, cropRight=5, x=0, y=0), value=0.4}, Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=0.4}, Pair{key=FlipImageTransform(flipMode=1, h=0, w=0, mode=0), value=0.4}, Pair{key=RotateImageTransform(centerx=0.0, centery=0.0, angle=90.0, scale=0.0, interMode=1, borderMode=0, borderValue=(0.0, 0.0, 0.0, 0.0), M=null), value=0.4}], shuffle=false, rng=org.nd4j.linalg.cpu.nativecpu.rng.CpuNativeRandom@49206065, currentTransforms=[])
 22:30:58.896 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - valTransform object:PipelineImageTransform(imageTransforms=[Pair{key=BaseImageTransform(random=null, converter=null, currentImage=null), value=1.0}, Pair{key=CropImageTransform(cropTop=50, cropLeft=50, cropBottom=50, cropRight=50, x=0, y=0), value=1.0}], shuffle=false, rng=org.nd4j.linalg.cpu.nativecpu.rng.CpuNativeRandom@49206065, currentTransforms=[])
 22:30:58.965 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - trainSplit.length():540 valSplit.length():180 testSplit.length():180
@@ -510,12 +510,12 @@ Precision, recall & F1: macro-averaged (equally weighted avg. of 6 classes)
 
 Confusion matrix format: Actual (rowClass) predicted as (columnClass) N times
 ==================================================================
-02:59:01.112 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Model successfully exported to: C:\Users\thesp\Code\deeplearning4j-occlupanid\models\deeplearning4jOcclupanidModel1.2.0.zip
+02:59:01.112 [main] INFO  com.mtheory7.model.OcclupanidModelTrainer - Model successfully exported to: C:\Users\thesp\Code\OcclupanID\models\deeplearning4jOcclupanidModel1.2.0.zip
 02:59:01.112 [main] INFO  com.mtheory7.Main - Finished trainModelAndSave function...
 02:59:01.112 [main] INFO  com.mtheory7.Main - Starting model tests...
 02:59:01.121 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Loading saved model from .zip...
 02:59:01.395 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Configuring image preprocessor...
-02:59:01.401 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Scanning directory: C:/Users/thesp/Code/deeplearning4j-occlupanid/trainingData/data
+02:59:01.401 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Scanning directory: C:/Users/thesp/Code/OcclupanID/trainingData/data
 02:59:01.402 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Logging any images that are incorrect or less than 80% confident...
 02:59:08.169 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_174407502.jpg' | Actual: 'AdmordorsumFloridensis' | Predicted: 'AdmordorsumFloridensis' (Confidence: 74.51%)
 02:59:14.617 [main] INFO  com.mtheory7.model.OcclupanidModelTester - Correct: File 'PXL_20261011_174855523.jpg' | Actual: 'AdmordorsumFloridensis' | Predicted: 'AdmordorsumFloridensis' (Confidence: 51.18%)
