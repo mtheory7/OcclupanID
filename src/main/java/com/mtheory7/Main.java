@@ -14,34 +14,34 @@ import java.time.Instant;
 public class Main {
     protected static final Logger log = LoggerFactory.getLogger(Main.class);
     public static final Instant START_TIME = Instant.now();
-    private static OcclupanIDConfig config;
 
     public static void main(String[] args) throws Exception {
-        String configPath = (args.length > 0) ? args[1] : "config.json";
-        File jsonFile = new File(configPath);
-
-        if (!jsonFile.exists()) {
-            System.err.println("Configuration file not found: " + jsonFile.getAbsolutePath());
+        if (args.length != 2 || !args[0].equals("--config")) {
+            log.error("Unexpected or missing argument(s). Please use the following argument setup: --config <config.json file path>");
             return;
         }
 
+        File jsonFile = new File(args[1]);
+        if (!jsonFile.exists()) {
+            log.error("Configuration file not found: {}", jsonFile.getAbsolutePath());
+            return;
+        }
+
+        OcclupanIDConfig config;
         try {
             ObjectMapper mapper = new ObjectMapper();
             config = mapper.readValue(jsonFile, OcclupanIDConfig.class);
-            // Map JSON to your Java POJO configuration class
-            // MyConfig config = mapper.readValue(jsonFile, MyConfig.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("There was an error parsing the configuration file: {}", e.getMessage());
+            return;
         }
 
         log.info("Starting trainModelAndSave function...");
-        OcclupanidModelTrainer occlupanidModelTrainer = new OcclupanidModelTrainer();
-        occlupanidModelTrainer.trainModelAndSave(config);
+        new OcclupanidModelTrainer().trainModelAndSave(config);
         log.info("Finished trainModelAndSave function...");
 
         log.info("Starting model tests...");
-        OcclupanidModelTester occlupanidModelTester = new OcclupanidModelTester();
-        occlupanidModelTester.predictImages(config);
+        new OcclupanidModelTester().predictImages(config);
         log.info("Finished testing model");
 
         log.info("Program finished in {} hours", ((float) (Duration.between(START_TIME, Instant.now()).toMillis()) / 1000 / 3600));
