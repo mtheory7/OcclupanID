@@ -90,8 +90,8 @@ public class OcclupanidModelTrainer {
                 new Pair<>(new CropImageTransform(5), 0.4),
                 new Pair<>(new Greyscale3ChannelTransform(), 0.4),
                 new Pair<>(new FlipImageTransform(1), 0.4),
-                new Pair<>(new RotateImageTransform(90), 0.4),
-                new Pair<>(new SaveImageTransform(config.dataPathTransformed, "transformedImage", 100), 1.0)
+                new Pair<>(new RotateImageTransform(90), 0.4)
+                //new Pair<>(new SaveImageTransform(config.dataPathTransformed, "transformedImage", 100), 1.0)
         ), false);
         log.info("trainTransform object:{}", trainTransform);
         PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
