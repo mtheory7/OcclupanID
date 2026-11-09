@@ -58,8 +58,8 @@ public class OcclupanidModelTrainer {
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
 
     public void trainModelAndSave(OcclupanIDConfig config) throws IOException {
-        log.info("MAX_EPOCHS:{} EPOCH_TERMINATION_AMOUNT:{} LEARNING_RATE:{} WEIGHT_DECAY:{} HEIGHT:{} WIDTH:{} CHANNELS:{} BATCH_SIZE:{} SEED:{}",
-                config.epochMax, config.epochEarlyStop, config.learningRate, config.learningWeightDecay,
+        log.info("MAX_EPOCHS:{} EPOCH_TERMINATION_AMOUNT:{} LEARNING_RATE:{} HEIGHT:{} WIDTH:{} CHANNELS:{} BATCH_SIZE:{} SEED:{}",
+                config.epochMax, config.epochEarlyStop, config.learningRate, //config.learningWeightDecay,
                 config.imageHeight, config.imageWidth, config.channels, config.batchSize, config.seed);
 
         log.info("Configuring aggressive native memory garbage collection...");

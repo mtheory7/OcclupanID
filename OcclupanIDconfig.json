@@ -18,7 +18,6 @@
   "imageHeight": 224,
   "imageWidth": 224,
   "learningRate": 5e-5,
-  "learningWeightDecay": 1e-3,
   "modelSaveFile": "deeplearning4jOcclupanidModel1.3.0.zip",
   "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
   "seed": 12345
