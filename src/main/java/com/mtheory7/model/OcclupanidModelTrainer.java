@@ -128,7 +128,7 @@ public class OcclupanidModelTrainer {
         log.info("Configuring transfer learning...");
         FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder()
                 .updater(new Adam(config.learningRate))
-                .weightDecay(config.learningWeightDecay)
+                //.weightDecay(config.learningWeightDecay)
                 .seed(config.seed)
                 .build();
 
