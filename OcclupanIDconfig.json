@@ -17,7 +17,7 @@
   "epochMax": 100,
   "imageHeight": 224,
   "imageWidth": 224,
-  "learningRate": 5e-5,
+  "learningRate": 1e-4,
   "modelSaveFile": "deeplearning4jOcclupanidModel1.3.0.zip",
   "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
   "seed": 12345
