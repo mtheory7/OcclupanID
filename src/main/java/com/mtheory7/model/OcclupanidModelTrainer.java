@@ -4,7 +4,6 @@ import com.mtheory7.config.OcclupanIDConfig;
 import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.Greyscale3ChannelTransform;
 import com.mtheory7.utils.PadToSquare;
-import com.mtheory7.utils.SaveImageTransform;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
@@ -42,7 +41,6 @@ import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.VGG16ImagePreProcessor;
-import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
@@ -50,6 +48,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -62,28 +62,16 @@ public class OcclupanidModelTrainer {
                 config.epochMax, config.epochEarlyStop, config.learningRate, //config.learningWeightDecay,
                 config.imageHeight, config.imageWidth, config.channels, config.batchSize, config.seed);
 
-        log.info("Configuring aggressive native memory garbage collection...");
-        Nd4j.getMemoryManager().togglePeriodicGc(true);
-        Nd4j.getMemoryManager().setAutoGcWindow(5000);
-
         String modelCheckpointPath = config.modelSavePath + File.separator + "checkpoints";
-        if (!new File(modelCheckpointPath).exists()) //noinspection ResultOfMethodCallIgnored
-            new File(modelCheckpointPath).mkdirs();
         String modelFileName = config.modelSavePath + File.separator + config.modelSaveFile;
+        Files.createDirectories(Path.of(modelCheckpointPath));
 
+        log.info("Initializing UIServer...");
         UIServer uiServer = UIServer.getInstance();
-        File statsFile = new File(config.modelSavePath, "training_stats.dl4j");
-        StatsStorage statsStorage = new FileStatsStorage(statsFile);
+        StatsStorage statsStorage = new FileStatsStorage(new File(config.modelSavePath, "training_stats.dl4j"));
         uiServer.attach(statsStorage);
 
-        File trainingDataDirectory = new File(config.dataPath);
-        FileSplit fileSplit = new FileSplit(trainingDataDirectory, NativeImageLoader.ALLOWED_FORMATS, new Random(config.seed));
-        ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
-        BalancedPathFilter pathFilter = new BalancedPathFilter(
-                new Random(config.seed),
-                NativeImageLoader.ALLOWED_FORMATS,
-                labelMaker
-        );
+        log.info("Preparing PipelineImageTransform objects...");
         PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
                 new Pair<>(new PadToSquare(), 1.0),
                 new Pair<>(new CropImageTransform(50), 1.0),
@@ -99,6 +87,15 @@ public class OcclupanidModelTrainer {
                 new Pair<>(new CropImageTransform(50), 1.0)
         ), false);
         log.info("valTransform object:{}", valTransform);
+
+        log.info("Splitting and preparing training data...");
+        FileSplit fileSplit = new FileSplit(new File(config.dataPath), NativeImageLoader.ALLOWED_FORMATS, new Random(config.seed));
+        ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
+        BalancedPathFilter pathFilter = new BalancedPathFilter(
+                new Random(config.seed),
+                NativeImageLoader.ALLOWED_FORMATS,
+                labelMaker
+        );
         InputSplit[] splits = fileSplit.sample(pathFilter, 60, 20, 20);
         InputSplit trainSplit = splits[0];
         InputSplit valSplit = splits[1];
@@ -111,14 +108,15 @@ public class OcclupanidModelTrainer {
         valRR.initialize(valSplit, valTransform);
         testRR.initialize(testSplit, valTransform);
         log.info("Detected training labels: {}", trainRR.getLabels());
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, config.batchSize, 1, config.classNames.size());
-        DataSetIterator valIter = new RecordReaderDataSetIterator(valRR, config.batchSize, 1, config.classNames.size());
-        DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, config.batchSize, 1, config.classNames.size());
+        DataSetIterator trainIterator = new RecordReaderDataSetIterator(trainRR, config.batchSize, 1, config.classNames.size());
+        DataSetIterator valIterator = new RecordReaderDataSetIterator(valRR, config.batchSize, 1, config.classNames.size());
+        DataSetIterator testIterator = new RecordReaderDataSetIterator(testRR, config.batchSize, 1, config.classNames.size());
 
+        log.info("Preparing DataNormalization scaler...");
         DataNormalization scaler = new VGG16ImagePreProcessor();
-        trainIter.setPreProcessor(scaler);
-        valIter.setPreProcessor(scaler);
-        testIter.setPreProcessor(scaler);
+        trainIterator.setPreProcessor(scaler);
+        valIterator.setPreProcessor(scaler);
+        testIterator.setPreProcessor(scaler);
 
         log.info("Loading pre-trained SqueezeNet weights from ImageNet...");
         SqueezeNet zooModel = SqueezeNet.builder().build();
@@ -152,6 +150,7 @@ public class OcclupanidModelTrainer {
                 .setOutputs("predictions")
                 .build();
 
+        log.info("Adding listeners to model...");
         model.setListeners(
                 new ScoreIterationListener(50),
                 new StatsListener(statsStorage),
@@ -164,28 +163,27 @@ public class OcclupanidModelTrainer {
                         new MaxEpochsTerminationCondition(config.epochMax),
                         new ScoreImprovementEpochTerminationCondition(config.epochEarlyStop)
                 )
-                .scoreCalculator(new DataSetLossCalculator(valIter, true))
+                .scoreCalculator(new DataSetLossCalculator(valIterator, true))
                 .evaluateEveryNEpochs(1)
                 .modelSaver(new LocalFileGraphSaver(modelCheckpointPath))
                 .build();
+        EarlyStoppingGraphTrainer trainer = new EarlyStoppingGraphTrainer(esConf, model, trainIterator);
 
-        EarlyStoppingGraphTrainer trainer = new EarlyStoppingGraphTrainer(esConf, model, trainIter);
-
-        log.info("Starting network training with EarlyStopping...");
+        log.info("Starting network training...");
         EarlyStoppingResult<ComputationGraph> result = trainer.fit();
 
-        log.info("Training complete.");
+        log.info("Training complete!");
         log.info("Termination reason: {}", result.getTerminationReason());
         log.info("Total epochs: {}", result.getTotalEpochs());
         log.info("Best epoch number: {}", result.getBestModelEpoch());
-        log.info("Score at best epoch: {}", result.getBestModelScore());
-
-        ComputationGraph bestModel = result.getBestModel();
+        log.info("Score at best epoch: {}", result.getBestModel().score());
 
         log.info("Evaluating best model accuracy using testing data directory...");
-        Evaluation eval = bestModel.evaluate(testIter);
+        ComputationGraph bestModel = result.getBestModel();
+        Evaluation eval = bestModel.evaluate(testIterator);
         log.info(eval.stats());
 
+        log.info("Saving best model...");
         File modelFile = new File(modelFileName);
         bestModel.save(modelFile, true);
         log.info("Model successfully exported to: {}", modelFile.getAbsolutePath());
