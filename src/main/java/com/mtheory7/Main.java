@@ -20,13 +20,11 @@ public class Main {
             log.error("Unexpected or missing argument(s). Please use the following argument setup: --config <config.json file path>");
             return;
         }
-
         File jsonFile = new File(args[1]);
         if (!jsonFile.exists()) {
             log.error("Configuration file not found: {}", jsonFile.getAbsolutePath());
             return;
         }
-
         OcclupanIDConfig config;
         try {
             ObjectMapper mapper = new ObjectMapper();

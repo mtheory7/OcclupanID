@@ -13,7 +13,7 @@ public class OcclupanIDConfig {
     public int imageHeight;
     public int imageWidth;
     public double learningRate;
-    public double learningWeightDecay;
+    //public double learningWeightDecay; was set to 1e-3, training works better without it
     public String modelSaveFile;
     public String modelSavePath;
     public long seed;
