@@ -4,12 +4,15 @@
   "classNames": [
     "AdmordorsumFloridensis",
     "AdmordorsumGrongingensis",
+    "AspericardisLehmeri",
     "ConcavicepsScobifolium",
+    "GenevertonicusQuimbyi",
     "NeotesseraVitripalpus",
     "PalpatophoraGlyphodorsalis",
     "PalpatophoraUtiliformis",
     "PalpatophoraUtiliformisGrandis",
-    "PorrectofrontusMechadeus"
+    "PorrectofrontusMechadeus",
+    "UnidentiaOblongaris"
   ],
   "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data",
   "dataPathTransformed": "C:/Users/thesp/Code/OcclupanID/trainingData/transformed",
@@ -18,7 +21,7 @@
   "imageHeight": 224,
   "imageWidth": 224,
   "learningRate": 1e-4,
-  "modelSaveFile": "deeplearning4jOcclupanidModel1.3.0.zip",
+  "modelSaveFile": "deeplearning4jOcclupanidModel1.4.0.zip",
   "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
   "seed": 12345
 }
