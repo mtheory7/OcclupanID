@@ -38,7 +38,7 @@ build/
 ### Mac OS ###
 .DS_Store
 
-models/*
-!models/deeplearning4jOcclupanidModel*
+models/checkpoints/
+models/training_stats.dl4j
 /.idea/
 /.mvn/
