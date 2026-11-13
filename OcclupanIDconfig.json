@@ -12,7 +12,8 @@
     "PalpatophoraUtiliformis",
     "PalpatophoraUtiliformisGrandis",
     "PorrectofrontusMechadeus",
-    "UnidentiaOblongaris"
+    "UnidentiaOblongaris",
+    "UnidentiaObtusamaxillaAzureus"
   ],
   "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data",
   "dataPathTransformed": "C:/Users/thesp/Code/OcclupanID/trainingData/transformed",

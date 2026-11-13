@@ -1,0 +1,28 @@
+{
+  "batchSize": 16,
+  "channels": 3,
+  "classNames": [
+    "AdmordorsumFloridensis",
+    "AdmordorsumGrongingensis",
+    "AspericardisLehmeri",
+    "ConcavicepsScobifolium",
+    "GenevertonicusQuimbyi",
+    "NeotesseraVitripalpus",
+    "PalpatophoraGlyphodorsalis",
+    "PalpatophoraUtiliformis",
+    "PalpatophoraUtiliformisGrandis",
+    "PorrectofrontusMechadeus",
+    "UnidentiaOblongaris",
+    "UnidentiaObtusamaxillaAzureus"
+  ],
+  "dataPath": "/home/ec2-user/OcclupanID/trainingData/data",
+  "dataPathTransformed": "/home/ec2-user/OcclupanID/trainingData/transformed",
+  "epochEarlyStop": 20,
+  "epochMax": 100,
+  "imageHeight": 224,
+  "imageWidth": 224,
+  "learningRate": 1e-4,
+  "modelSaveFile": "deeplearning4jOcclupanidModel1.4.0.zip",
+  "modelSavePath": "/home/ec2-user/OcclupanID/models",
+  "seed": 12345
+}
