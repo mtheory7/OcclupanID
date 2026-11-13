@@ -5,7 +5,7 @@ Currently, the model is very accurate - validation during training reports >98% 
 
 Genus/species names come from the amazing [HORG - The Holotypic Occlupanid Research Group](https://www.horg.com/horg/)
 
-Genus/species currently supported, more to come(6):
+Genus/species currently supported, more to come:
 - Admordorsum floridensis
 - Admordorsum grongingensis
 - Aspericardis lehmeri
