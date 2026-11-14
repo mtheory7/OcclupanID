@@ -56,11 +56,29 @@
             <artifactId>deeplearning4j-zoo</artifactId>
             <version>${dl4j-master.version}</version>
         </dependency>
+
+        <!-- START OF NATIVE/CPU SETUP -->
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-native</artifactId>
             <version>${dl4j-master.version}</version>
         </dependency>
+        <!-- END OF NATIVE/CPU SETUP -->
+
+        <!-- START OF CUDA/GPU SETUP -->
+        <!--<dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-cuda-11.6-platform</artifactId>
+            <version>${dl4j-master.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>cuda</artifactId>
+            <version>11.6-8.3-1.5.7</version>
+            <classifier>linux-x86_64-redist</classifier>
+        </dependency>-->
+        <!-- END OF CUDA/GPU SETUP -->
+
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-api</artifactId>
@@ -98,6 +116,12 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.mtheory7.Main</mainClass>
+                                </transformer>
+                                <!-- REQUIRED by JavaCPP and ND4J to merge native platform definitions -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <!-- REQUIRED by deeplearning4j-ui to merge Akka/Play configurations -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>reference.conf</resource>
                                 </transformer>
                             </transformers>
                         </configuration>

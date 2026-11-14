@@ -1,5 +1,6 @@
 {
   "batchSize": 16,
+  "batchSizeValidation": 4,
   "channels": 3,
   "classNames": [
     "AdmordorsumFloridensis",
@@ -15,7 +16,7 @@
     "UnidentiaOblongaris",
     "UnidentiaObtusamaxillaAzureus"
   ],
-  "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data",
+  "dataPath": "C:/Users/thesp/Code/OcclupanID/trainingData/data_resized",
   "dataPathTransformed": "C:/Users/thesp/Code/OcclupanID/trainingData/transformed",
   "epochEarlyStop": 20,
   "epochMax": 100,
@@ -24,5 +25,6 @@
   "learningRate": 1e-4,
   "modelSaveFile": "deeplearning4jOcclupanidModel1.4.0.zip",
   "modelSavePath": "C:/Users/thesp/Code/OcclupanID/models",
-  "seed": 12345
+  "seed": 12345,
+  "uiStatsEnabled": false
 }

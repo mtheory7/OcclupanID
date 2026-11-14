@@ -1,9 +1,10 @@
 package com.mtheory7.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mtheory7.config.OcclupanIDConfig;
 import com.mtheory7.listener.ProgressEpochListener;
 import com.mtheory7.utils.Greyscale3ChannelTransform;
-import com.mtheory7.utils.PadToSquare;
+import com.mtheory7.utils.SaveImageTransform;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
@@ -41,6 +42,7 @@ import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.VGG16ImagePreProcessor;
+import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
@@ -51,43 +53,30 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class OcclupanidModelTrainer {
     protected static final Logger log = LoggerFactory.getLogger(OcclupanidModelTrainer.class);
 
     public void trainModelAndSave(OcclupanIDConfig config) throws IOException {
-        log.info("MAX_EPOCHS:{} EPOCH_TERMINATION_AMOUNT:{} LEARNING_RATE:{} HEIGHT:{} WIDTH:{} CHANNELS:{} BATCH_SIZE:{} SEED:{}",
-                config.epochMax, config.epochEarlyStop, config.learningRate, //config.learningWeightDecay,
-                config.imageHeight, config.imageWidth, config.channels, config.batchSize, config.seed);
+        log.info("OcclupanIDConfig setup: {}", new ObjectMapper().writeValueAsString(config));
 
         String modelCheckpointPath = config.modelSavePath + File.separator + "checkpoints";
         String modelFileName = config.modelSavePath + File.separator + config.modelSaveFile;
         Files.createDirectories(Path.of(modelCheckpointPath));
 
-        log.info("Initializing UIServer...");
-        UIServer uiServer = UIServer.getInstance();
-        StatsStorage statsStorage = new FileStatsStorage(new File(config.modelSavePath, "training_stats.dl4j"));
-        uiServer.attach(statsStorage);
+        log.info("Calling setAutoGcWindow...");
+        Nd4j.getMemoryManager().setAutoGcWindow(5000);
 
         log.info("Preparing PipelineImageTransform objects...");
         PipelineImageTransform trainTransform = new PipelineImageTransform(Arrays.asList(
-                new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new CropImageTransform(50), 1.0),
                 new Pair<>(new CropImageTransform(5), 0.5),
                 new Pair<>(new Greyscale3ChannelTransform(), 0.5),
                 new Pair<>(new FlipImageTransform(1), 0.5),
                 new Pair<>(new RotateImageTransform(90), 0.5)
-                //new Pair<>(new SaveImageTransform(config.dataPathTransformed, "transformedImage", 100), 1.0)
+                //,new Pair<>(new SaveImageTransform(config.dataPathTransformed, "transformedImage", 500), 1.0)
         ), false);
         log.info("trainTransform object:{}", trainTransform);
-        PipelineImageTransform valTransform = new PipelineImageTransform(List.of(
-                new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new CropImageTransform(50), 1.0)
-        ), false);
-        log.info("valTransform object:{}", valTransform);
-
         log.info("Splitting and preparing training data...");
         FileSplit fileSplit = new FileSplit(new File(config.dataPath), NativeImageLoader.ALLOWED_FORMATS, new Random(config.seed));
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
@@ -105,12 +94,12 @@ public class OcclupanidModelTrainer {
         ImageRecordReader valRR = new ImageRecordReader(config.imageHeight, config.imageWidth, config.channels, labelMaker);
         ImageRecordReader testRR = new ImageRecordReader(config.imageHeight, config.imageWidth, config.channels, labelMaker);
         trainRR.initialize(trainSplit, trainTransform);
-        valRR.initialize(valSplit, valTransform);
-        testRR.initialize(testSplit, valTransform);
+        valRR.initialize(valSplit, null);
+        testRR.initialize(testSplit, null);
         log.info("Detected training labels: {}", trainRR.getLabels());
         DataSetIterator trainIterator = new RecordReaderDataSetIterator(trainRR, config.batchSize, 1, config.classNames.size());
-        DataSetIterator valIterator = new RecordReaderDataSetIterator(valRR, config.batchSize, 1, config.classNames.size());
-        DataSetIterator testIterator = new RecordReaderDataSetIterator(testRR, config.batchSize, 1, config.classNames.size());
+        DataSetIterator valIterator = new RecordReaderDataSetIterator(valRR, config.batchSizeValidation, 1, config.classNames.size());
+        DataSetIterator testIterator = new RecordReaderDataSetIterator(testRR, config.batchSizeValidation, 1, config.classNames.size());
 
         log.info("Preparing DataNormalization scaler...");
         DataNormalization scaler = new VGG16ImagePreProcessor();
@@ -153,9 +142,16 @@ public class OcclupanidModelTrainer {
         log.info("Adding listeners to model...");
         model.setListeners(
                 new ScoreIterationListener(50),
-                new StatsListener(statsStorage),
                 new ProgressEpochListener(config.epochMax)
         );
+
+        if (config.uiStatsEnabled) {
+            log.info("UI Stats enabled - Initializing UIServer...");
+            UIServer uiServer = UIServer.getInstance();
+            StatsStorage statsStorage = new FileStatsStorage(new File(config.modelSavePath, "training_stats.dl4j"));
+            uiServer.attach(statsStorage);
+            model.addListeners(new StatsListener(statsStorage));
+        }
 
         log.info("Configuring Early Stopping...");
         EarlyStoppingConfiguration<ComputationGraph> esConf = new EarlyStoppingConfiguration.Builder<ComputationGraph>()

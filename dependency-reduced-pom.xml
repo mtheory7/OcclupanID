@@ -30,6 +30,10 @@
                 <transformer>
                   <mainClass>com.mtheory7.Main</mainClass>
                 </transformer>
+                <transformer />
+                <transformer>
+                  <resource>reference.conf</resource>
+                </transformer>
               </transformers>
             </configuration>
           </execution>
