@@ -28,11 +28,7 @@ public class OcclupanidModelTester {
         ComputationGraph model = ComputationGraph.load(new File(config.modelSavePath + File.separator + config.modelSaveFile), false);
 
         log.info("Configuring image preprocessor...");
-        PipelineImageTransform inferenceTransform = new PipelineImageTransform(List.of(
-                new Pair<>(new PadToSquare(), 1.0),
-                new Pair<>(new CropImageTransform(50), 1.0)
-        ), false);
-        NativeImageLoader loader = new NativeImageLoader(224, 224, 3, inferenceTransform);
+        NativeImageLoader loader = new NativeImageLoader(224, 224, 3);
         DataNormalization scaler = new VGG16ImagePreProcessor();
 
         int errorCount = 0;

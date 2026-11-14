@@ -4,6 +4,7 @@ import java.util.List;
 
 public class OcclupanIDConfig {
     public int batchSize;
+    public int batchSizeValidation;
     public int channels;
     public List<String> classNames;
     public String dataPath;
@@ -17,4 +18,5 @@ public class OcclupanIDConfig {
     public String modelSaveFile;
     public String modelSavePath;
     public long seed;
+    public boolean uiStatsEnabled;
 }
